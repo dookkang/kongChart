@@ -1,0 +1,581 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>차트갤러리</title>
+	<link href="WebContent/css/layout.css" rel="stylesheet" />
+	<link href="WebContent/css/edior.css" rel="stylesheet" />  
+
+	<script src="WebContent/js/jquery-latest.min.js"></script>
+	<script src="WebContent/js/common.js"></script> 
+	<script type="text/javascript" src="WebContent/js/kimchart/SurfacePlot2.js"></script>
+	<script type="text/javascript" src="WebContent/js/kimchart/ColourGradient.js"></script>
+	<script type="text/javascript" src="WebContent/js/kimchart/glMatrix-0.9.5.min.js"></script>
+	<script type="text/javascript" src="WebContent/js/kimchart/webgl-utils.js"></script>
+	<script type="text/javascript" src="WebContent/js/kimchart/parser.js"></script>
+	<script type="text/javascript" src="WebContent/js/kimchart/kimchart.js"></script>
+	<link rel="stylesheet" type="text/css" href="WebContent/css/kimchart/kimchart.css">
+	<script language="JavaScript" src="WebContent/js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="WebContent/js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="WebContent/js/color_picker/ui.colorpicker.css"/>
+  	<script src="WebContent/js/mchart/ColourGradient.js"></script> 
+  	<script src="WebContent/js/mchart/mbaseChart1.0.js"></script>	
+<link rel="stylesheet" href="WebContent/js/jquery.svg.package-1.5.0/jquery.svg.css">  	
+	<script src="WebContent/js/jquery.svg.package-1.5.0/jquery.svg.js"></script>
+	<style>
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 50px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 50px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 50px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 50px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 50px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+	
+	</style>
+	<style> 
+	@keyframes pound2 {
+		from { transform: scale(1); }
+	    20% {
+	        visibility: hidden;
+	    }	
+	    40% {
+	        visibility: hidden;
+	    }	
+	    60% {
+	        visibility: hidden;
+	    }	        	
+	    80% {
+	        visibility: hidden;
+	    }	
+		to { transform: scale(1); }
+	}
+	
+	@-webkit-keyframes pound {
+		from { transform: scale(1); }
+	    20% {
+	        visibility: hidden;
+	    }	
+	    40% {
+	        visibility: hidden;
+	    }	
+	    60% {
+	        visibility: hidden;
+	    }	        	
+	    80% {
+	        visibility: hidden;
+	    }	
+		to { transform: scale(1); }
+	}
+	</style>
+  	
+<style>
+#colorIndex {
+  /* For Safari 5.1 to 6.0 */
+  background: -webkit-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+   /* For Opera 11.1 to 12.0 */
+  background: -o-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+  /* For Fx 3.6 to 15 */
+  background: -moz-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+   /* Standard syntax */
+  background: linear-gradient(to bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1)); 
+} 
+</style>
+	<script id="shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec3 aVertexNormal;attribute vec4 aVertexColor;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;uniform mat3 uNMatrix;varying vec4 vColor;uniform vec3 uAmbientColor;uniform vec3 uLightingDirection;uniform vec3 uDirectionalColor;varying vec3 vLightWeighting;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vec3 transformedNormal = uNMatrix * aVertexNormal;float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;vColor = aVertexColor;}</script>
+	<script id="axes-shader-fs" type="x-shader/x-fragment">precision mediump float;varying vec4 vColor;void main(void){gl_FragColor = vColor;}</script>
+	<script id="axes-shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec4 aVertexColor;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;varying vec4 vColor;uniform vec3 uAxesColour;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vColor =  vec4(uAxesColour, 1.0);}</script>
+	<script id="shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec4 vColor;
+	varying vec3 vLightWeighting;
+	void main(void)
+	{
+    gl_FragColor = vec4(vColor.rgb * vLightWeighting, vColor.a);
+	}
+	</script>
+	<script id="texture-shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+	void main(void)
+	{
+    gl_FragColor = texture2D(uSampler, vTextureCoord);
+	}
+	</script>
+	<script id="texture-shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec2 aTextureCoord;varying vec2 vTextureCoord;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vTextureCoord = aTextureCoord;}</script>
+	<script>
+	
+	 var animate_map = {};
+	 var animate_state = {};
+	 function actBlink2(_objId,_action){
+		for(var i=0;i < 3;i++){
+		 	var objDiv = $('#'+_objId);
+		 	var x = 1;
+		 	var animate = animate_map[_objId];
+		 	if(_action == 'start'){
+		 		
+		 		
+			 	if(animate != null){
+			 		animate.beginElement();
+			 		console.log(_objId+'start');
+			 		animate_state[_objId] = 'start';
+			 	}else{
+			 		animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+			  	  	animate.setAttribute('attributeType', 'CSS');
+			 		animate.setAttribute('attributeName', 'opacity');
+			 	    animate.setAttribute('from', '1');
+			 	    animate.setAttribute('to', '0');
+			 	    animate.setAttribute('repeatCount', 'indefinite');
+			 	    animate.setAttribute('begin', '0s');
+			 	    animate.setAttribute('dur', '0.4s');
+			 	    
+			 	    objDiv[0].appendChild(animate); 
+			 	    animate_map[_objId] = animate;
+			 	    console.log(_objId+'create');
+			 	}
+		 	}else{
+		 		if(animate != null){
+		 			console.log(_objId+'stop');
+		 			animate_state[_objId] = 'stop';
+			 		animate.endElement();
+			 	}
+		 		
+		 	}
+		}
+	 }
+	 
+	 
+	 var animate_map3 = {};
+	 var animate_state3 = {};
+	  function actBlink3(_objId,_action){
+
+		 	var objDiv = $('#'+_objId);
+		 	var x = 1;
+		 	var animate = animate_map3[_objId];
+		 	if(_action == 'start'){
+		 		
+		 		
+			 	if(animate != null){
+			 		animate.beginElement();
+			 		console.log(_objId+'start');
+			 		animate_state3[_objId] = 'start';
+			 	}else{
+			 		animate = document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform');
+	/* 		 		animate.setAttribute('type', 'scale');
+			  	  	animate.setAttribute('attributeType', 'CSS');
+			 		animate.setAttribute('attributeName', 'transform');
+			 	    animate.setAttribute('from', '1');
+			 	    animate.setAttribute('to', '2');
+			 	    animate.setAttribute('repeatCount', 'indefinite');
+			 	    animate.setAttribute('begin', '0s');
+			 	    animate.setAttribute('dur', '0.4s');
+			 	     */
+	/* 		 	    animate.setAttribute("attributeName", "transform");
+					animate.setAttribute("attributeType", "xml");
+					animate.setAttribute("type", "translate" );
+					animate.setAttribute("from", "10");
+					animate.setAttribute("to", "100");
+					animate.setAttribute("begin", "0s");
+					animate.setAttribute("dur", "2s");
+					animate.setAttribute("fill", "freeze"); */
+
+	/* 		 	    animate.setAttribute("attributeName", "transform");
+					animate.setAttribute("attributeType", "xml");
+					animate.setAttribute("type", "translate" );
+					animate.setAttribute("from", "10");
+					animate.setAttribute("to", "100");
+					animate.setAttribute("begin", "0s");
+					animate.setAttribute("dur", "2s"); */
+					//animate.setAttribute("fill", "freeze");
+					
+	/* 				 <animateTransform attributeName="transform" attributeType="XML"
+				           type="scale" from="1" to="3" additive="sum"
+				           begin="3s" dur="6s" fill="freeze" /> */
+					
+					
+					animate.setAttribute("attributeName", "transform");
+					animate.setAttribute("attributeType", "XML");
+					animate.setAttribute("type", "scale" );
+					animate.setAttribute("from", "1");
+					animate.setAttribute("to", "3");
+					animate.setAttribute("begin", "3s");
+					//animate.setAttribute("values", "3 3; 5 5");
+					animate.setAttribute("dur", "6s");
+					animate.setAttribute("additive", "sum");
+					animate.setAttribute("fill", "freeze");
+					
+					 //animate.setAttribute('repeatCount', 'indefinite');
+	/* 				
+					
+					 attributeName: 'transform',
+
+	  attributeType: 'XML',
+
+	  type: 'scale',
+
+	  begin: '0s',
+
+	  dur: '4s',
+
+	  values: '1 1; 1.5 1.5',
+
+	  fill: 'freeze',
+
+	  repeatCount: 'indefinite'
+
+	   */
+	  
+	   				animate_map3[_objId] = animate;
+			 	    objDiv[0].appendChild(animate_map3[_objId]); 
+			 	    animate_map3[_objId].beginElement();
+			 	}
+		 	}else{
+		 		if(animate != null){
+		 			console.log(_objId+'stop');
+		 			animate_state3[_objId] = 'stop';
+			 		animate.endElement();
+			 	}
+		 		
+		 	}
+		
+	 }
+	  
+	 function actBlink(_objId,_actionStr){
+			var objDiv = $('#'+_objId);
+
+			if (/(Chrome|Safari)/.test(navigator.userAgent)){ 
+				actBlink2(_objId,_actionStr);
+			}else{
+				console.log('ie');
+			  	objDiv.css('animation','');
+				setTimeout(
+						function(){objDiv.css('animation','pound2 1s 5');}
+					    , 10);  		
+			}
+		}
+
+	 	function simulation(){
+	 		var r = Math.floor(Math.random() * 15);
+			var _id = Math.floor(Math.random() * 7);
+			//var r = 4;
+			//var _id = '4';
+	 		console.log('r:'+r);
+	 		if(r == 0){
+	 			if(animate_state[_id] == 'start'){
+	 				actBlink(_id,'stop');
+	 			}else if(animate_state[_id] == 'stop' || animate_state[_id] == null){
+	 				actBlink(_id,'start');
+	 			} 
+	 		}else if(r == 1){
+	 			if(animate_state[_id] == 'start'){
+	 				actBlink(_id,'stop');
+	 			}else if(animate_state[_id] == 'stop' || animate_state[_id] == null){
+	 				actBlink(_id,'start');
+	 			} 
+	 		}else if(r == 2){
+					$('#'+_id).attr('fill','#9BBB59');
+	 		}else if(r == 3){
+					$('#'+_id).attr('fill','#3434FF');
+	 		}else if(r == 4){
+		 		   var ellipse = $('#'+_id)[0];
+		 	       var rx = ellipse.getAttribute("rx");
+		 	       var ry = ellipse.getAttribute("ry");
+		 	       if(ellipse.getAttribute("rx") > 100){
+		 	    	  ellipse.setAttribute("rx", 10);
+		 	       }else{
+		 	    	  ellipse.setAttribute("rx", rx*2);
+		 	       }
+		 	       
+		 	       if(ellipse.getAttribute("ry") > 100){
+			 	    	  ellipse.setAttribute("ry", 10);
+			 	   }else{
+			 	    	  ellipse.setAttribute("ry", ry*2);  
+			 	   }
+		 	       ellipse.setAttribute("ry", ry*2);   
+			}else if(r == 5){
+		 		   var ellipse = $('#'+_id)[0];
+		 	       var rx = ellipse.getAttribute("rx");
+		 	       var ry = ellipse.getAttribute("ry");
+		 	      
+		 	       ellipse.setAttribute("rx", rx*0.8);
+		 	       ellipse.setAttribute("ry", ry*0.8);
+			}else if(r == 6){
+				   //$('#p'+r).css('fill','yellow');
+				   var p_index = Math.floor(Math.random() * $('path').length);
+				   if(typeof $('path')[p_index] != 'undefined'){
+					   $($('path')[p_index]).css('fill','orange');
+				   }
+			}else if(r == 7){
+				   //$('#p'+r).css('fill','green');
+				   var p_index = Math.floor(Math.random() * $('path').length);
+				   if(typeof $('path')[p_index] != 'undefined'){
+					   $($('path')[p_index]).css('fill','red');
+				   }
+			}else if(r == 8){
+			       var l_index = Math.floor(Math.random() * $('line').length);
+			       if(typeof $('line')[l_index] != 'undefined'){
+				       $($('line')[l_index]).css('strokeWidth',$($('line')[l_index]).css('strokeWidth')*10);
+				       $($('line')[l_index]).css('x1',$($('line')[l_index]).css('x1')+30);
+				       $($('line')[l_index]).css('y1',$($('line')[l_index]).css('y1')-20);
+				       $($('line')[l_index]).css('x2',$($('line')[l_index]).css('x2')+50);
+				       $($('line')[l_index]).css('y2',$($('line')[l_index]).css('y2')-70);			       
+			       }
+			}else if(r == 9){
+			       var l_index = Math.floor(Math.random() * $('line').length);
+			       if(typeof $('line')[l_index] != 'undefined'){
+				       $($('line')[l_index]).css('strokeWidth',$($('line')[l_index]).css('strokeWidth')/10);
+				       $($('line')[l_index]).css('x1',$($('line')[l_index]).css('x1')-30);
+				       $($('line')[l_index]).css('y1',$($('line')[l_index]).css('y1')+20);
+				       $($('line')[l_index]).css('x2',$($('line')[l_index]).css('x2')-50);
+				       $($('line')[l_index]).css('y2',$($('line')[l_index]).css('y2')+70);			       
+			       }
+			}else if(r == 10){
+				   $('#p'+r).css('fill','none');
+			       var p_index = Math.floor(Math.random() * $('path').length);
+			       if(typeof $('path')[p_index] != 'undefined'){
+				       $($('path')[p_index]).css('fill','none');
+			       }
+			}else if(r == 11){
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('F'+_id+' 수문을 오픈합니다!'+(new Date()));
+			       }
+			}else if(r == 12){
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('F'+_id+' 수문을 닫습니다!'+(new Date()));
+			       }
+			}else if(r == 13){
+	 			if(animate_state3[_id] == 'start'){
+	 				actBlink3(_id,'stop');
+	 			}else if(animate_state3[_id] == 'stop' || animate_state3[_id] == null){
+	 				actBlink3(_id,'start');
+	 			} 
+			}else if(r == 14){
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('');
+			       }
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('');
+			       }
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('');
+			       }	
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('');
+			       }	
+				   var t_index = Math.floor(Math.random() * $('text').length);
+			       if(typeof $('text')[t_index] != 'undefined'){
+				       $($('text')[t_index]).empty().append('');
+			       }	
+			}
+	 		
+	 		
+	 		//textObj.empty().append(obj[key]);
+	 		
+	 		//stroke-miterlimit
+	 	}
+	 	
+	 	function zoom(){
+	 		$('svg')[0].setAttribute("width", $('svg').width()+$('svg').width()*0.2);
+	 		$('svg')[0].setAttribute("height", $('svg').height()+$('svg').height()*0.2);
+	 	}
+	 
+	 	var w;
+	 	var h;
+	 	function showVal(v){
+	 		if(w == null){
+	 			w = $('svg').width();
+	 			h = $('svg').height();
+		 		$('svg')[0].setAttribute("width", w*v);
+		 		$('svg')[0].setAttribute("height", h*v);
+		 		
+		 		$('svg')[0].setAttribute("x", -((w*v)));
+		 		$('svg')[0].setAttribute("y", -((h*v)));
+	 		}else{
+		 		$('svg')[0].setAttribute("width", w*v);
+		 		$('svg')[0].setAttribute("height", h*v);
+		 		
+		 		$('svg')[0].setAttribute("x", -((w*v)));
+		 		$('svg')[0].setAttribute("y", -((h*v)));
+	 			
+	 			
+	 		}
+
+	 	}
+	 			
+ 	
+ 	
+	
+	</script>
+  	<script>
+  	function metrix_export(x1,x2,y1,y2){alert('x1:'+x1+',x2:'+x2+',y1:'+y1+',y2:'+y2);}
+  	
+  	var series_array = {};var y_base_lines = {};var x_terms = {};var optionx = {};
+	var data3d = [[0,0,0,0,6,0,4,0,4,0,0,0,0,3,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,9,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,4,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,3,1,0,0,14,4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,0,1,0,0,10,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,12,0,0,1,0,0,0,14,1,0,1,4,0,0,5,2,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,1,8,0,0,3,0,4,0,0,1,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,21,0,0,3,0,5,17,0,4,0,0,0,5,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,9,6,0,0,0,9,0,5,0,0,0,10,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],[0,0,0,0,9,9,0,0,0,1,4,0,0,0,5,0,0,0,0,0,5,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,11,0,0,2,0,7,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,13,0,0,0,10,4,0,0,0,9,0,0,3,0,0,13,9,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,25,0,0,5,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,4,0,0,0,0,3,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,2,4,0,0,0,16,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,12,0,0,0,0,0,0,3,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,1,0,0,3,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,3,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,8,0,3,5,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,13,0,0,34,0,17,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,14,0,0,0,0,38,0,0,0,0,0,0,0,24,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,14,0,37,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,0,3,0,36,0,7,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,33,0,0,0,0,0,0,0,26,0,0,0,0,7,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,11,0,0,3,1,0,0,0,5,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,1,5,0,0,0,0,11,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,10,0,3,0,0,1,4,0,2,0,0,0,4,0,0,0,0,0,0,3,38,0,0,0,0,0,0,0,1,0,0,0,30,0,17,0,0,0,0,0,0,0,1,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,13,0,0,0,0,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,7,0,0,0,0,9,0,0,1,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0],[0,1,0,0,13,0,0,0,0,26,0,0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,4,0,0,5,0,0,0,0,0,0,9,0,0,0,40,0,0,0,0,0,0,0],[0,0,0,0,14,0,0,0,37,0,0,0,0,24,0,0,0,0,3,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,5,0,0,6,42,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,3,0,0,45,7,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,5,0,0,0,6,0,43,0,0,18,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,1,0,0,0,0,21,0,0,0,43,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,2,0,0,0,0,42,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,11,0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,0,0,4,0,6,0,0,0,0,0,0,0,44,0,0,0,10,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,43,0,0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0],[0,0,0,0,11,0,0,0,0,0,4,0,0,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,4,0,0,0,0,10,0,40,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,0,0,0,1,0,0,0,0,0,39,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,2,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,43,0,0,0,0,7,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,10,0,0,0,9,0,0,11,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,8,0,0,0,3,0,1,0,0,0,0,0,0,0,43,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,20,0,34,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,9,0,0,6,0,0,0,0,0,6,0,40,0,8,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,4,41,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,8,0,9,0,0,0,2,0,0,0,0,1,0,44,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,33,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,15,0,0,0,0,3,0,0,0,0,0,0,47,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,5,0,0,46,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],[0,0,0,0,0,15,0,0,0,1,3,0,0,0,0,3,0,43,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,1,0,0,0,0,0,0,0,8,42,0,0,8,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,3,0,35,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,0,3,0,0,0,0,0,0,0,0,0,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,10,0,0,0,0,13,42,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,0,0,0,0,0,0,0,39,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,11,13,0,0,4,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,25,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,6,0,0,6,0,0,0,0,0,4,0,44,0,0,9,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,4,0,2,0,0,0,43,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,10,0,0,0,1,0,0,0,0,1,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,6,0,0,6,42,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,8,0,0,0,0,0,0,1,0,0,0,0,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,9,0,0,13,0,0,0,39,0,3,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,7,0,1,0,0,1,0,0,0,2,0,0,0,37,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,9,0,0,0,0,14,0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,45,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,2,0,0,0,0,0,0,45,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,11,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,17,0,0,0,11,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,13,0,7,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,43,0,5,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,38,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,3,0,0,3,0,0,9,0,0,0,0,0,0,42,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,0,0,0,0,15,0,0,0,0,0,7,0,45,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,4,0,0,0,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,18,0,0,0,0,0,12,0,0,43,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,45,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,14,0,0,0,0,0,0,0,0,0,47,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,13,0,0,0,0,0,0,0,0,0,46,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,6,0,0,14,0,0,0,0,11,44,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,44,0,0,0,0,0,0,0,0,0],[0,0,0,0,8,0,0,35,0,13,0,0,0,19,0,0,7,0,0,0,3,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,5,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,47,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,3,0,0,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,3,0,46,0,0,0,3,0,0,0,0,0,0,1,0,0,0,0,0,0,0],[0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,3,0,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,43,0,0,0,9,0,0,0,0,0,0,0,0,0],[0,0,0,0,5,0,3,0,0,2,0,0,0,0,0,0,0,3,0,0,0,0,0,1,0,0,0,0,8,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,5,0,0,2,0,0,0,0,9,0,0,0,0,0,0,0,0,0],[0,0,0,0,8,0,6,29,0,0,0,0,0,0,0,0,0,0,0,0,2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,0,14,4,0,0,0,8,0,0,0,3,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,10,0,0,0,0,4,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,11,0,5,0,0,0,0,0,0,38,1,0,0,0,2,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,19,0,0,6,0,0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,2,0,11,0,0,11,0,0,5,0,0,0,0,4,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,8,0,0,0,0,34,0,0,0,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,8,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,2,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,29,0,0,0,2,0,0,0,0,22,0,5,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,10,1,0,0,0,0,5,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,1,20,22,0,0,1,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,12,0,0,0,0,0,0,6,0,2,0,28,1,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,5,0,0,0,6,38,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,9,0,0,0,0,0,0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,0,11,0,0,0,6,0,0,0,11,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+	var dataMetrix = [[211,202,220,202,3,203,34,203,239,202,61,203,112,203,103,203,73,203,57,203,16,203,220,202,0,203,76,203,107,203,153,203,150,203,82,203,38,203,2,203,244,202,15,203,81,203,88,203,114,203,67,203,36,203,44,203,231,202,189,202,230,202,24,203],[211,202,220,202,3,203,34,203,239,202,61,203,112,203,103,203,73,203,57,203,16,203,220,202,0,203,76,203,107,203,153,203,150,203,82,203,38,203,2,203,244,202,15,203,81,203,88,203,114,203,67,203,36,203,44,203,231,202,189,202,230,202,24,203],[40,203,91,203,112,203,108,203,20,203,1,203,251,202,37,203,79,203,94,203,156,203,178,203,81,203,26,203,7,203,225,202,38,203,68,203,117,203,113,203,149,203,68,203,42,203,244,202,179,202,169,202,18,203,88,203,89,203,143,203,41,203,4,203],[71,1,64,1,63,1,47,1,77,1,72,1,99,1,52,1,29,1,24,1,8,1,22,1,55,1,38,1,46,1,80,1,24,1,53,1,44,1,17,1,40,1,52,1,29,1,92,1,90,1,105,1,65,1,57,1,51,1,51,1,75,1,64,1],[85,1,81,1,61,1,78,1,54,1,75,1,23,1,43,1,43,1,50,1,76,1,61,1,60,1,57,1,36,1,28,1,19,1,32,1,12,1,68,1,86,1,71,1,66,1,62,1,68,1,98,1,82,1,60,1,93,1,69,1,75,1,78,1],[158,0,143,0,160,0,164,0,170,0,158,0,154,0,127,0,145,0,120,0,129,0,168,0,165,0,164,0,167,0,154,0,138,0,128,0,128,0,148,0,148,0,160,0,175,0,174,0,170,0,137,0,134,0,143,0,123,0,168,0,158,0,173,0],[168,0,159,0,149,0,129,0,146,0,128,0,127,0,163,0,155,0,173,0,157,0,157,0,121,0,123,0,135,0,154,0,165,0,176,0,172,0,176,0,142,0,133,0,135,0,119,0,162,0,155,0,175,0,172,0,170,0,148,0,150,0,148,0],[118,0,103,0,107,0,108,0,122,0,134,0,95,0,94,0,100,0,98,0,118,0,133,0,117,0,119,0,119,0,88,0,124,0,93,0,107,0,119,0,124,0,110,0,129,0,112,0,102,0,93,0,107,0,93,0,116,0,134,0,131,0,118,0],[123,0,110,0,117,0,84,0,111,0,87,0,111,0,117,0,130,0,114,0,113,0,103,0,96,0,105,0,115,0,116,0,122,0,109,0,127,0,118,0,91,0,107,0,89,0,111,0,99,0,150,0,125,0,137,0,105,0,99,0,101,0,100,0],[84,0,105,0,115,0,110,0,105,0,109,0,75,0,83,0,82,0,83,0,80,0,111,0,100,0,83,0,100,0,83,0,83,0,83,0,78,0,87,0,97,0,102,0,106,0,95,0,84,0,74,0,85,0,78,0,87,0,90,0,85,0,111,0],[110,0,77,0,74,0,91,0,75,0,82,0,120,0,106,0,120,0,98,0,82,0,75,0,78,0,90,0,78,0,94,0,106,0,85,0,89,0,89,0,93,0,86,0,81,0,82,0,97,0,111,0,99,0,84,0,86,0,92,0,87,0,85,0],[68,0,73,0,66,0,85,0,80,0,79,0,62,0,64,0,57,0,76,0,96,0,75,0,81,0,96,0,71,0,80,0,57,0,69,0,85,0,72,0,68,0,77,0,87,0,70,0,73,0,63,0,76,0,76,0,87,0,76,0,75,0,96,0],[80,0,71,0,54,0,60,0,64,0,71,0,86,0,76,0,72,0,80,0,70,0,45,0,78,0,76,0,64,0,75,0,85,0,94,0,89,0,64,0,65,0,58,0,68,0,79,0,83,0,80,0,81,0,84,0,76,0,54,0,73,0,81,0],[67,0,77,0,75,0,62,0,72,0,57,0,60,0,52,0,53,0,49,0,71,0,73,0,66,0,69,0,58,0,56,0,62,0,68,0,63,0,76,0,72,0,82,0,67,0,52,0,45,0,52,0,63,0,61,0,73,0,76,0,81,0,71,0],[55,0,48,0,48,0,67,0,65,0,60,0,78,0,71,0,65,0,76,0,64,0,35,0,52,0,63,0,71,0,72,0,66,0,73,0,77,0,54,0,38,0,59,0,66,0,64,0,74,0,64,0,60,0,71,0,51,0,65,0,58,0,60,0],[53,0,60,0,55,0,62,0,61,0,52,0,48,0,69,0,57,0,70,0,60,0,52,0,61,0,54,0,52,0,59,0,46,0,59,0,59,0,55,0,68,0,68,0,65,0,60,0,57,0,56,0,46,0,57,0,72,0,63,0,63,0,72,0],[45,0,58,0,75,0,48,0,42,0,63,0,57,0,78,0,55,0,66,0,61,0,51,0,60,0,52,0,61,0,70,0,57,0,60,0,60,0,52,0,52,0,54,0,47,0,70,0,76,0,58,0,74,0,53,0,54,0,57,0,57,0,57,0],[51,0,41,0,57,0,49,0,55,0,37,0,40,0,50,0,42,0,48,0,61,0,61,0,48,0,57,0,41,0,47,0,46,0,50,0,54,0,55,0,59,0,57,0,46,0,62,0,46,0,51,0,47,0,52,0,54,0,57,0,71,0,63,0],[45,0,52,0,43,0,52,0,42,0,62,0,66,0,57,0,67,0,53,0,34,0,51,0,48,0,58,0,58,0,56,0,41,0,58,0,49,0,44,0,51,0,46,0,44,0,46,0,68,0,69,0,50,0,52,0,55,0,43,0,54,0,45,0],[43,0,58,0,55,0,65,0,64,0,42,0,52,0,44,0,46,0,49,0,62,0,54,0,60,0,51,0,47,0,44,0,38,0,42,0,54,0,57,0,44,0,57,0,47,0,41,0,35,0,49,0,47,0,55,0,66,0,44,0,56,0,47,0],[46,0,34,0,47,0,61,0,50,0,61,0,53,0,59,0,48,0,33,0,42,0,49,0,46,0,35,0,48,0,57,0,56,0,47,0,43,0,48,0,39,0,50,0,52,0,51,0,52,0,51,0,44,0,40,0,49,0,47,0,38,0,43,0],[53,0,47,0,49,0,42,0,35,0,36,0,33,0,37,0,44,0,48,0,42,0,42,0,44,0,46,0,53,0,38,0,45,0,50,0,38,0,47,0,41,0,34,0,47,0,38,0,36,0,47,0,39,0,44,0,48,0,48,0,41,0,36,0],[35,0,37,0,42,0,35,0,36,0,42,0,37,0,44,0,45,0,41,0,32,0,36,0,45,0,26,0,33,0,49,0,38,0,51,0,37,0,28,0,36,0,38,0,44,0,47,0,38,0,42,0,37,0,40,0,31,0,36,0,51,0,43,0],[38,0,50,0,49,0,50,0,40,0,35,0,42,0,40,0,42,0,41,0,45,0,42,0,42,0,34,0,35,0,35,0,33,0,37,0,41,0,32,0,41,0,56,0,41,0,39,0,34,0,33,0,38,0,46,0,38,0,39,0,43,0,42,0],[41,0,33,0,45,0,35,0,26,0,54,0,46,0,48,0,47,0,40,0,23,0,39,0,33,0,36,0,60,0,46,0,50,0,42,0,38,0,33,0,38,0,30,0,31,0,50,0,48,0,36,0,45,0,40,0,29,0,33,0,38,0,41,0],[38,0,38,0,32,0,51,0,40,0,26,0,40,0,21,0,36,0,34,0,31,0,38,0,35,0,33,0,32,0,31,0,39,0,35,0,36,0,33,0,37,0,37,0,32,0,33,0,29,0,30,0,32,0,42,0,31,0,39,0,39,0,31,0],[25,0,28,0,36,0,44,0,40,0,39,0,48,0,26,0,37,0,30,0,21,0,40,0,37,0,42,0,37,0,33,0,39,0,44,0,37,0,27,0,32,0,32,0,33,0,38,0,35,0,42,0,23,0,27,0,43,0,37,0,35,0,27,0],[47,0,34,0,26,0,30,0,29,0,34,0,31,0,27,0,29,0,39,0,40,0,33,0,29,0,31,0,25,0,35,0,28,0,25,0,39,0,45,0,40,0,41,0,23,0,29,0,30,0,27,0,28,0,36,0,28,0,40,0,50,0,38,0],[28,0,36,0,30,0,24,0,34,0,32,0,49,0,22,0,37,0,35,0,29,0,33,0,33,0,38,0,33,0,35,0,41,0,42,0,31,0,24,0,23,0,25,0,35,0,32,0,32,0,43,0,36,0,32,0,26,0,37,0,37,0,39,0],[47,0,30,0,37,0,34,0,27,0,30,0,39,0,26,0,39,0,42,0,36,0,34,0,35,0,27,0,35,0,27,0,41,0,35,0,37,0,32,0,48,0,24,0,39,0,22,0,36,0,28,0,38,0,37,0,37,0,40,0,32,0,28,0],[32,0,36,0,28,0,34,0,31,0,36,0,43,0,32,0,28,0,25,0,23,0,27,0,35,0,45,0,29,0,27,0,33,0,28,0,29,0,23,0,32,0,34,0,42,0,37,0,36,0,28,0,33,0,25,0,25,0,26,0,28,0,26,0],[32,0,38,0,31,0,35,0,39,0,27,0,29,0,32,0,35,0,42,0,30,0,35,0,36,0,30,0,29,0,28,0,37,0,33,0,37,0,43,0,37,0,36,0,41,0,28,0,27,0,30,0,29,0,34,0,47,0,38,0,42,0,26,0],[36,0,31,0,39,0,20,0,41,0,51,0,33,0,32,0,40,0,31,0,43,0,27,0,28,0,31,0,33,0,34,0,30,0,37,0,29,0,30,0,26,0,23,0,34,0,38,0,42,0,40,0,36,0,30,0,26,0,29,0,31,0,34,0],[25,0,27,0,37,0,21,0,31,0,28,0,29,0,28,0,25,0,31,0,34,0,39,0,34,0,32,0,33,0,20,0,21,0,37,0,29,0,32,0,32,0,28,0,21,0,22,0,27,0,34,0,37,0,32,0,32,0,33,0,29,0,28,0],[31,0,19,0,33,0,17,0,36,0,37,0,32,0,37,0,28,0,29,0,39,0,33,0,32,0,27,0,35,0,38,0,37,0,27,0,28,0,27,0,34,0,25,0,34,0,41,0,34,0,28,0,28,0,32,0,27,0,34,0,30,0,29,0],[29,0,49,0,38,0,40,0,22,0,28,0,22,0,31,0,37,0,28,0,42,0,37,0,42,0,35,0,33,0,27,0,25,0,30,0,28,0,29,0,30,0,16,0,26,0,29,0,31,0,39,0,40,0,45,0,37,0,41,0,23,0,25,0],[25,0,26,0,30,0,31,0,39,0,32,0,32,0,38,0,23,0,24,0,33,0,29,0,32,0,30,0,27,0,35,0,33,0,30,0,22,0,28,0,34,0,32,0,31,0,32,0,35,0,31,0,27,0,32,0,30,0,26,0,27,0,31,0],[39,0,43,0,32,0,26,0,25,0,34,0,36,0,33,0,18,0,53,0,34,0,34,0,30,0,35,0,16,0,28,0,38,0,26,0,32,0,35,0,33,0,33,0,28,0,28,0,28,0,34,0,32,0,33,0,37,0,34,0,30,0,30,0],[22,0,35,0,33,0,32,0,35,0,35,0,34,0,31,0,24,0,26,0,27,0,38,0,28,0,32,0,41,0,26,0,23,0,29,0,26,0,31,0,26,0,37,0,28,0,27,0,29,0,23,0,26,0,16,0,34,0,39,0,28,0,35,0],[38,0,30,0,29,0,38,0,23,0,38,0,33,0,29,0,36,0,35,0,27,0,27,0,32,0,31,0,37,0,30,0,26,0,29,0,33,0,28,0,33,0,34,0,25,0,25,0,36,0,26,0,31,0,42,0,23,0,29,0,30,0,23,0],[36,0,36,0,27,0,29,0,33,0,29,0,30,0,28,0,23,0,28,0,33,0,25,0,21,0,39,0,46,0,36,0,34,0,28,0,25,0,33,0,23,0,32,0,29,0,34,0,30,0,35,0,24,0,25,0,25,0,21,0,26,0,27,0],[35,0,28,0,35,0,33,0,19,0,24,0,32,0,32,0,45,0,25,0,32,0,31,0,33,0,21,0,28,0,33,0,32,0,32,0,19,0,17,0,43,0,34,0,37,0,23,0,31,0,26,0,25,0,25,0,29,0,38,0,29,0,24,0],[15,0,29,0,23,0,27,0,43,0,37,0,36,0,27,0,24,0,20,0,36,0,34,0,23,0,32,0,39,0,33,0,40,0,31,0,30,0,32,0,16,0,32,0,47,0,35,0,30,0,37,0,30,0,29,0,30,0,29,0,26,0,32,0],[28,0,28,0,35,0,32,0,22,0,37,0,34,0,34,0,28,0,24,0,38,0,34,0,36,0,36,0,26,0,22,0,25,0,26,0,34,0,44,0,31,0,33,0,18,0,20,0,28,0,41,0,26,0,33,0,33,0,30,0,28,0,31,0],[23,0,26,0,18,0,30,0,26,0,28,0,38,0,47,0,33,0,21,0,22,0,21,0,18,0,35,0,25,0,42,0,24,0,27,0,21,0,31,0,31,0,21,0,25,0,33,0,29,0,24,0,15,0,30,0,34,0,25,0,28,0,41,0],[32,0,34,0,42,0,20,0,24,0,19,0,11,0,22,0,31,0,25,0,26,0,28,0,27,0,30,0,29,0,34,0,24,0,30,0,28,0,20,0,34,0,27,0,19,0,21,0,24,0,27,0,33,0,23,0,31,0,31,0,30,0,15,0],[34,0,30,0,30,0,34,0,35,0,39,0,25,0,24,0,25,0,19,0,28,0,30,0,39,0,27,0,33,0,36,0,37,0,25,0,23,0,32,0,33,0,38,0,25,0,31,0,33,0,23,0,23,0,25,0,29,0,20,0,19,0,29,0],[27,0,23,0,24,0,28,0,27,0,24,0,31,0,33,0,32,0,31,0,34,0,32,0,28,0,30,0,26,0,28,0,28,0,31,0,32,0,35,0,28,0,30,0,24,0,25,0,28,0,34,0,33,0,27,0,31,0,28,0,17,0,30,0],[34,0,34,0,29,0,30,0,33,0,25,0,22,0,40,0,24,0,24,0,18,0,28,0,27,0,38,0,21,0,29,0,31,0,28,0,26,0,31,0,29,0,30,0,37,0,32,0,38,0,35,0,37,0,29,0,24,0,25,0,28,0,33,0],[34,0,32,0,35,0,26,0,46,0,44,0,28,0,26,0,33,0,26,0,39,0,35,0,42,0,28,0,26,0,34,0,32,0,35,0,32,0,31,0,34,0,36,0,27,0,32,0,31,0,29,0,33,0,41,0,29,0,39,0,35,0,33,0],[31,0,26,0,29,0,27,0,32,0,35,0,39,0,31,0,22,0,22,0,31,0,24,0,38,0,33,0,43,0,27,0,33,0,29,0,27,0,26,0,31,0,39,0,46,0,29,0,37,0,36,0,32,0,29,0,36,0,36,0,35,0,37,0],[88,0,77,0,69,0,64,0,71,0,63,0,54,0,84,0,75,0,83,0,73,0,64,0,59,0,55,0,70,0,63,0,60,0,76,0,77,0,85,0,81,0,68,0,61,0,68,0,61,0,64,0,74,0,45,0,77,0,74,0,76,0,69,0],[71,0,78,0,77,0,77,0,94,0,88,0,70,0,58,0,56,0,67,0,59,0,57,0,77,0,64,0,65,0,79,0,64,0,77,0,56,0,65,0,77,0,88,0,85,0,72,0,62,0,53,0,51,0,58,0,54,0,61,0,77,0,84,0],[47,0,42,0,41,0,40,0,47,0,47,0,58,0,35,0,58,0,61,0,53,0,49,0,51,0,53,0,45,0,43,0,45,0,54,0,45,0,67,0,39,0,50,0,41,0,52,0,51,0,44,0,63,0,48,0,49,0,47,0,40,0,52,0],[41,0,56,0,39,0,44,0,53,0,50,0,40,0,38,0,42,0,45,0,39,0,33,0,50,0,56,0,59,0,41,0,59,0,43,0,36,0,44,0,32,0,40,0,43,0,54,0,54,0,47,0,41,0,50,0,44,0,38,0,44,0,47,0],[48,0,56,0,51,0,35,0,39,0,44,0,39,0,44,0,53,0,43,0,48,0,47,0,55,0,49,0,47,0,50,0,33,0,42,0,51,0,54,0,47,0,52,0,46,0,40,0,41,0,47,0,48,0,39,0,52,0,42,0,35,0,45,0],[51,0,48,0,46,0,50,0,44,0,44,0,48,0,41,0,45,0,58,0,48,0,47,0,48,0,43,0,43,0,60,0,47,0,36,0,53,0,64,0,47,0,59,0,60,0,57,0,46,0,55,0,54,0,43,0,46,0,52,0,38,0,53,0],[69,0,65,0,56,0,72,0,74,0,58,0,75,0,65,0,68,0,63,0,59,0,67,0,58,0,60,0,59,0,50,0,61,0,64,0,62,0,69,0,54,0,56,0,59,0,67,0,66,0,67,0,58,0,68,0,71,0,76,0,67,0,72,0],[67,0,64,0,49,0,58,0,69,0,58,0,50,0,56,0,57,0,66,0,59,0,69,0,63,0,72,0,77,0,70,0,56,0,60,0,76,0,69,0,67,0,74,0,67,0,83,0,67,0,56,0,73,0,70,0,70,0,65,0,70,0,71,0],[123,0,118,0,116,0,115,0,112,0,113,0,99,0,143,0,135,0,135,0,134,0,134,0,107,0,116,0,110,0,103,0,148,0,130,0,148,0,136,0,128,0,106,0,108,0,121,0,117,0,136,0,139,0,136,0,131,0,114,0,128,0,104,0],[112,0,114,0,126,0,128,0,126,0,123,0,139,0,117,0,111,0,127,0,110,0,119,0,149,0,145,0,131,0,121,0,97,0,93,0,120,0,112,0,138,0,131,0,125,0,120,0,133,0,111,0,106,0,110,0,124,0,121,0,148,0,123,0],[45,0,51,0,34,0,34,0,45,0,46,0,43,0,64,0,49,0,46,0,36,0,43,0,42,0,37,0,38,0,39,0,45,0,43,0,43,0,39,0,35,0,32,0,40,0,41,0,35,0,40,0,54,0,35,0,35,0,42,0,46,0,32,0],[46,0,47,0,45,0,49,0,49,0,36,0,33,0,38,0,45,0,40,0,36,0,33,0,45,0,44,0,44,0,42,0,30,0,40,0,45,0,28,0,37,0,38,0,28,0,31,0,44,0,58,0,55,0,38,0,38,0,40,0,54,0,47,0],[15,0,22,0,9,0,16,0,28,0,22,0,25,0,19,0,22,0,16,0,22,0,21,0,14,0,9,0,16,0,20,0,17,0,20,0,22,0,16,0,16,0,18,0,22,0,16,0,20,0,21,0,17,0,13,0,19,0,16,0,17,0,13,0],[25,0,19,0,16,0,15,0,17,0,23,0,14,0,17,0,19,0,12,0,12,0,13,0,18,0,16,0,19,0,12,0,21,0,13,0,12,0,20,0,19,0,15,0,21,0,17,0,16,0,12,0,14,0,21,0,12,0,13,0,22,0,18,0]]
+
+	  
+	function creat2d(_idx,_series,_optionx){
+			 _optionx.chartId = _idx;
+			 series_array[_idx]=_series;
+			 y_base_lines[_idx] = _optionx.y_base_lines;
+			 x_terms[_idx] = _optionx.x_terms;
+			 optionx[_idx] = _optionx;
+			 var mChart = setChart(_idx,$('#'+'chart_'+_idx),optionx[_idx]); 
+	}  			
+		
+	function create3d(chartDivId,_canvas){
+			var colour1 = {red: 0,green: 0,blue: 255};
+		    var colour2 = {red: 0,green: 255,blue: 255};
+		    var colour3 = {red: 0,green: 255,blue: 0};
+		    var colour4 = {red: 255,green: 255,blue: 0};
+		    var colour5 = {red: 255,green: 0,blue: 0};
+			var colours = [colour1, colour2, colour3, colour4, colour5];
+			var numRows = 60;var numCols = 64;
+			var titles = {
+				x: 'Phase(위상)',
+				y: 'Time(초)',
+				z: ''
+			};
+			var labels = {
+				x: [0, 90,180,270,360],
+				y: [0, 10, 20, 30, 40, 50, 60],
+				z: [-20,0,20,40,60]
+			};
+			new_chart = new KimsChart(document.getElementById(chartDivId));
+			new_chart.init(numRows, numCols, titles, labels, colours,_canvas);
+			return new_chart;
+	}
+		
+		
+	$(document).ready(function() {
+//chart3 : 열화상80*80	  
+  			var series =
+				 [ 
+			 	    {s_name:'선로4',s_data:getSampleData_forMetrix(255,0,80),s_color:'rgba(255,201,14,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'metrix',s_shape:'circle',s_draw:true} 
+				 ];
+			var options = jQuery.extend(true, {}, defaultOption);
+			options.series = series;options.menu_visible = true;
+			options.type = 'metrix';
+			options.ly_width = 0.12;
+			options.title = '열화상80*80';	
+			options._y_min = 0;
+			options._y_max =80;
+			options._x_min = 0;
+			options._x_max = 80;
+			options.y_div_cnt = 4;//y축 분할수
+			options.x_div_cnt = 4;//x축 분할수
+			options.y_min_re = 0;
+			options.y_max_re =80;
+			options.x_min_re = 0;
+			options.x_max_re = 80;	
+			options.metrix_export = true;//metrix_export는 function metrix_out(x1,x2,y1,y2){alert('x1:'+x1+',x2:'+x2+',y1:'+y1+',y2:'+y2);}와 같이 함수가 반드시 선언되어 잇어야함!			
+			options.x_label = '';
+			options.y_label = '';	
+			options.b_height = 0.3;
+			options.background_color = 'rgba(0,0,255,1)';
+			options.y_base_lines = defaultYBaseLines.slice(0);
+			options.x_terms = defaultXTerms.slice(0);			
+	   		creat2d(3,series,options); 
+
+	});//초기화 영역-------------------------------------------------------------
+	
+
+  	</script>	
+</head> 
+<body>
+<!-- row 1 -->				
+	<div id="chart_3" style='position:absolute;float:left;border:0px solid olive;height:100%;width:100%'></div> 
+</body>
+</html>
+

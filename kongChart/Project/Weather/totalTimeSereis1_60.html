@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+<!-- 	<link href="css/edior.css" rel="stylesheet" />   -->
+	<script src="js/jquery-latest.min.js"></script>
+<!-- 	<script src="js/common.js"></script>  -->
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/totalTimeData_60.js"></script> 
+  	<script src="js/mchart/chartUtil.js"></script>  	
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var min = 60;//60분
+		var seriesMapArray = ['5','-10','-15','-30','-40','-50'];
+		var fObj = chartUtil.formatDataTotalTime(totalTimeSeries1_data,min,seriesMapArray);
+		var fObj5 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[0]]);
+		var fObjm10 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[1]]);
+		var fObjm15 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[2]]);
+		var fObjm30 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[3]]);
+		var fObjm40 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[4]]);
+		var fObjm50 = chartUtil.formatData(fObj['seriesMap'][seriesMapArray[5]]);
+
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.type						= 'timeSeries';
+		option.background_color 		= 'rgba(255,255,0,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'XY';
+		option.x_mark_cnt				= fObj['_tmp_v2'];//mark 10개
+		option.y_mark_cnt				= 8;//mark 9개
+		option.min						= 0;
+		option.max						= 10000;		
+		option.xmin						= -(fObj['_tmp_v2']*6*(min/10));
+		option.xmax						= 0;
+		option.toFixedY					= 2;
+		option.toFixedX					= 0;
+		option.multiYAxis				= false;//이 옵션은 반드시 pivot_mode = 'XY'에서만 동작합니다.
+		option.unitLabel_Hori			= 'H';
+		option.unitLabel_Verti			= 'm';
+		option.chartTitle				= '통합시계열(온도)';	
+		option.startDateTime			= fObj['d'];
+		option.dotShow					= false;
+		var series =
+			 [
+ 		 	    {s_name:'A상',s_data:fObj5['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,0,1)',s_draw:true,unitLabel_Hori:'5도',unitLabel_Hori_txtColor:'red'},		 	   		 	    
+		 	   {s_name:'A상',s_data:fObjm10['reArr']
+		 	    ,s_color:'rgba(100,128,50,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,50,1)',s_draw:true,unitLabel_Hori:'-10도',unitLabel_Hori_txtColor:'blue'},
+		 	   {s_name:'A상',s_data:fObjm15['reArr']
+		 	    ,s_color:'pink',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,100,1)',s_draw:true,unitLabel_Hori:'-15도',unitLabel_Hori_txtColor:'pink'},
+		 	   {s_name:'A상',s_data:fObjm30['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,150,1)',s_draw:true,unitLabel_Hori:'-30도',unitLabel_Hori_txtColor:'blue'},
+		 	   {s_name:'A상',s_data:fObjm40['reArr']
+		 	    ,s_color:'red',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,200,1)',s_draw:true,unitLabel_Hori:'-40도',unitLabel_Hori_txtColor:'black'},
+			   {s_name:'A상',s_data:fObjm50['reArr']
+		 	    ,s_color:'blue',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,250,1)',s_draw:true,unitLabel_Hori:'-50도',unitLabel_Hori_txtColor:'green'},
+		 	   		 	    
+			 ];
+		option.series					= series;
+		hChart.redraw(option);
+		
+		function winresize(){
+			hChart.redraw(option);		
+		}
+		$(window).resize(winresize);
+
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='position:absolute;float:left;border:0px solid olive;height:100%;width:100%'></div>    
+</body>
+</html>
+

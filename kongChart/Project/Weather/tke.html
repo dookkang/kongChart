@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+<!-- 	<link href="css/edior.css" rel="stylesheet" />   -->
+	<script src="js/jquery-latest.min.js"></script>
+<!-- 	<script src="js/common.js"></script>  -->
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/tke.js"></script> 
+  	<script src="js/mchart/chartUtil.js"></script>  	
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var timeGep = 48;
+		var fObj = chartUtil.formatDataMetrix(tke_data,2,timeGep);//*4는1일, *8은2일
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.type						= 'timeSeries';
+		option.background_color 		= 'rgba(255,34,0,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'XY';
+		option.x_mark_cnt				= fObj['_tmp_v2'];//mark 10개
+		option.y_mark_cnt				= 10;
+		option.min						= 0;
+		option.max						= 10000;
+
+		
+		//option.zmin						= fObj['minYValue'];
+		//option.zmax						= fObj['maxYValue'];	
+
+		option.zmin						= 0;
+		option.zmax						= 600;
+		option.dividCnt					= 6;//총컬러조각수
+		option.dividTxtPer				= 1;//1개당 1개 텍스트를 찍음
+		option.toFixedZ					= 0;//소숫점표시자리수,0은 소수점표시안함.
+
+		option.xmin						= -(fObj['_tmp_v2']*timeGep);
+		option.xmax						= 0;
+		option.toFixedY					= 2;
+		option.toFixedX					= 0;
+		option.multiYAxis				= false;//이 옵션은 반드시 pivot_mode = 'XY'에서만 동작합니다.
+		option.unitLabel_Hori			= 'H';
+		option.unitLabel_Verti			= 'm';
+		option.unitLabel_3thVal			= 'm2/s2';
+		option.chartTitle				= 'TKE(난류운동에너지)';	
+		option.startDateTime			= fObj['d'];
+		option.right_margin				= 80;
+		option.gradientBoxWidth			= 20;
+		option.gradientBoxHeight		= 30;	
+		option.gradientLegendShow		= true;
+		
+		var colours = [
+		                {red: 210,green: 206,blue: 233},
+		                {red: 185,green: 176,blue: 239},
+		                {red: 168,green: 148,blue: 217},
+		                {red: 142,green: 123,blue: 202},
+		                {red: 122,green: 77,blue: 255},
+		                {red: 101,green: 62,blue: 189},
+		                {red: 76,green: 28,blue: 228},
+		                {red: 49,green: 5,blue: 206}
+		                ];//작은숫자 밝게 위컬러, 큰숫자 어둡게 아래컬러				
+		
+		option.colours			= colours;
+		var colourGradientObject = new ColourGradient(option.zmin, option.zmax, colours);
+		option.colorObj			= colourGradientObject;
+		
+		var series =
+			 [
+ 		 	    {s_name:'A상',s_data:fObj['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'metrix',s_shape:'rectangle',s_shapeColor:'rgba(100,128,0,1)',s_draw:true,s_min:0,s_max:10000},		 	   		 	     	    
+			 ];
+		option.series = series;
+		hChart.redraw(option);
+		
+		function winresize(){
+			hChart.redraw(option);		
+		}
+		$(window).resize(winresize);
+
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='position:absolute;float:left;border:0px solid olive;height:100%;width:100%'></div>    
+</body>
+</html>
+

@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+<!-- 	<link href="css/edior.css" rel="stylesheet" />   -->
+	<script src="js/jquery-latest.min.js"></script>
+<!-- 	<script src="js/common.js"></script>  -->
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/totalTimeData.js"></script> 
+  	<script src="js/mchart/chartUtil.js"></script>  	
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var min = 10;//10분
+		var seriesMapArray = ['0','-10','-20','-30','-40','-50'];		
+		var fObj = chartUtil.formatDataTotalTime(totalTimeSeries1_data,min,seriesMapArray);
+		var fObj0 = chartUtil.formatData(fObj['seriesMap']['0'],min);//역순
+		var fObjm10 = chartUtil.formatData(fObj['seriesMap']['-10'],min);
+		var fObjm20 = chartUtil.formatData(fObj['seriesMap']['-20'],min);
+		var fObjm30 = chartUtil.formatData(fObj['seriesMap']['-30'],min);
+		var fObjm40 = chartUtil.formatData(fObj['seriesMap']['-40'],min);
+		var fObjm50 = chartUtil.formatData(fObj['seriesMap']['-50'],min);
+
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.type						= 'timeSeries';
+		option.background_color 		= 'rgba(255,255,0,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'XY';
+		option.x_mark_cnt				= fObj['_tmp_v2'];//xMaxIndex즉 mark의 개수
+		option.y_mark_cnt				= 8;//mark 9개
+		option.min						= 0;
+		option.max						= 10000;		
+		option.xmin						= -(fObj['_tmp_v2']*6*(min/10));//mark1개당 시간(6시간)
+		option.xmax						= 0;
+		option.toFixedY					= 2;
+		option.toFixedX					= 0;
+		option.multiYAxis				= false;//이 옵션은 반드시 pivot_mode = 'XY'에서만 동작합니다.
+		option.unitLabel_Hori			= 'H';
+		option.unitLabel_Verti			= 'm';
+		option.chartTitle				= '통합시계열(온도)';	
+		option.startDateTime			= fObj['d'];
+		var series =
+			 [
+ 		 	    {s_name:'A상',s_data:fObj0['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,0,1)',s_draw:true,unitLabel_Hori:'0도'},		 	   		 	    
+ 		 	   {s_name:'A상',s_data:fObjm10['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,50,1)',s_draw:true,unitLabel_Hori:'-10도'},
+		 	   {s_name:'A상',s_data:fObjm20['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,100,1)',s_draw:true,unitLabel_Hori:'-20도'},
+		 	   {s_name:'A상',s_data:fObjm30['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,150,1)',s_draw:true,unitLabel_Hori:'-30도'},
+		 	   {s_name:'A상',s_data:fObjm40['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,200,1)',s_draw:true,unitLabel_Hori:'-40도'},
+			   {s_name:'A상',s_data:fObjm50['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,250,1)',s_draw:true,unitLabel_Hori:'-50도'}
+		 	    		 	    
+			 ];
+		option.series					= series;
+		hChart.redraw(option);
+		console.dir(fObj0['reArr']);
+		function winresize(){
+			hChart.redraw(option);		
+		}
+		$(window).resize(winresize);
+
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='position:absolute;float:left;border:0px solid olive;height:100%;width:100%'></div>    
+</body>
+</html>
+

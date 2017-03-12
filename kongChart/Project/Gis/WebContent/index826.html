@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+	<link href="css/edior.css" rel="stylesheet" />  
+	<script src="js/jquery-latest.min.js"></script>
+	<script src="js/common.js"></script> 
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.background_color 		= 'rgba(253,138,110,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'YX';
+		option.x_mark_cnt				= 10;
+		option.min						= -100;
+		option.max						= 100;
+		option.xmin						= 0;
+		option.xmax						= 10000;
+		var series =
+			 [
+		 	    /* {s_name:'A상',s_data:[['1',30,1],['aa',80,1],['김세창김유진',180,1],['4',10,1]],s_color:'rgba(255,201,14,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'bar',s_shape:'circle',s_draw:true} */
+		 	    {s_name:'A상',s_data:getSampleData(-100,5,10,true),s_color:'rgba(255,201,14,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'bar',s_shape:'circle',s_draw:true}
+			 ];
+		option.series					= series;
+		hChart.redraw(option);
+		function winresize(){
+			hChart.redraw(option);
+		}
+		$(window).resize(winresize);
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='border:0px solid olive;height:100%'></div>                 
+</body>
+</html>
+

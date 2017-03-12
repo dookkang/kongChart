@@ -1,0 +1,2 @@
+화면 화면명.html
+처리 화면명Ins,Upt,Del,Sel.php

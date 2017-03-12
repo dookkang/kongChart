@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+<!-- 	<link href="css/edior.css" rel="stylesheet" />   -->
+	<script src="js/jquery-latest.min.js"></script>
+<!-- 	<script src="js/common.js"></script>  -->
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/chartData.js"></script> 
+  	<script src="js/mchart/chartUtil.js"></script>  	
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var fObj = chartUtil.formatData(timeSeries2_data);
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.type						= 'timeSeries';
+		option.background_color 		= 'rgba(255,255,0,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'XY';
+		option.x_mark_cnt				= fObj['_tmp_v2'];//mark 10개
+		option.y_mark_cnt				= 8;//mark 9개
+		option.xmin						= -(fObj['_tmp_v2']*6);
+		option.xmax						= 0;
+		option.toFixedY					= 2;
+		option.toFixedX					= 0;
+		option.multiYAxis				= false;//이 옵션은 반드시 pivot_mode = 'XY'에서만 동작합니다.
+		option.unitLabel_Hori			= 'H';
+		option.unitLabel_Verti			= 'ºc';
+		option.chartTitle				= 'TimeSeries(기온(Temperature))';	
+		option.startDateTime			= fObj['d'];
+		option.right_margin				= 40;		
+		var series =
+			 [
+ 		 	    {s_name:'A상',s_data:fObj['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'line',s_shape:'circle',s_shapeColor:'rgba(100,128,192,1)',s_draw:true,s_min:fObj['_tmp_y_min'],s_max:fObj['_tmp_y_max']},		 	   		 	    
+			 ];
+		option.series					= series;
+		hChart.redraw(option);
+		
+		function winresize(){
+			hChart.redraw(option);		
+		}
+		$(window).resize(winresize);
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='position:absolute;border:0px solid olive;height:100%;width:100%;background-color:pink'></div>    
+</body>
+</html>
+

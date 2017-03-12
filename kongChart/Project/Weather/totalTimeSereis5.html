@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>horizontal</title>
+	<link href="css/layout.css" rel="stylesheet" />
+<!-- 	<link href="css/edior.css" rel="stylesheet" />   -->
+	<script src="js/jquery-latest.min.js"></script>
+<!-- 	<script src="js/common.js"></script>  -->
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/totalTimeData.js"></script>  	
+  	<script src="js/mchart/totalTimeData2.js"></script> 
+  	<script src="js/mchart/totalTimeData3.js"></script>   	
+  	<script src="js/mchart/chartUtil.js"></script>  	
+  	<script src="js/mchart/horizonChart.js"></script>	
+  	<script>
+	$(document).ready(function() {
+		var min = 10;
+		var seriesMapArray = ['0','-10','-20','-30','-40','-50'];	
+		var fObj = chartUtil.formatDataTotalTime(totalTimeSeries1_data,min,seriesMapArray);		
+		var fObj_2 = chartUtil.formatDataMetrix(totalTimeSeries2_data,2);
+		var fObj_3 = chartUtil.formatDataMetrix(totalTimeSeries3_data,3);
+		var fObj0 = chartUtil.formatData(fObj['seriesMap']['0']);
+		var fObjm10 = chartUtil.formatData(fObj['seriesMap']['-10']);
+		var fObjm20 = chartUtil.formatData(fObj['seriesMap']['-20']);
+		var fObjm30 = chartUtil.formatData(fObj['seriesMap']['-30']);
+		var fObjm40 = chartUtil.formatData(fObj['seriesMap']['-40']);
+		var fObjm50 = chartUtil.formatData(fObj['seriesMap']['-50']);
+		
+		
+		var hChart = new HChart($('#chart_container_1'));
+		var option = hChart.createOption();
+		option.type						= 'timeSeries';
+		option.windflag_unit			= 'ms';		
+		option.background_color 		= 'rgba(255,34,0,0.5)';
+		option.axis_stroke_color 		= 'rgba(0,0,0,0.5)';
+		option.pivot_mode				= 'XY';
+		option.x_mark_cnt				= fObj['_tmp_v2'];//mark 10개
+		option.y_mark_cnt				= 10;
+		option.min						= 0;
+		option.max						= 10000;	
+		option.zmin						= fObj_2['minYValue'];
+		option.zmax						= fObj_2['maxYValue'];		
+		
+		/*맨우측 색값표시바 속성 start*/
+		option.zmin						= -60;
+		option.zmax						= 40;
+		option.dividCnt					= 100;//총컬러조각수
+		option.dividTxtPer				= 10;//컬러조각수10개당 1개 텍스트를 찍음
+		option.toFixedZ					= 0;//소숫점표시자리수,0은 소수점표시안함.
+		/*맨우측 색값표시바 속성 end*/
+		
+		option.xmin						= -(fObj['_tmp_v2']*6);
+		option.xmax						= 0;
+		option.toFixedY					= 2;
+		option.toFixedX					= 0;
+		option.multiYAxis				= false;//이 옵션은 반드시 pivot_mode = 'XY'에서만 동작합니다.
+		option.unitLabel_Hori			= 'H';
+		option.unitLabel_Verti			= 'm';
+		option.unitLabel_3thVal			= 'T-Td(ºC)';			
+		option.chartTitle				= '통합시계열(T-td)';	
+		option.startDateTime			= fObj['d'];
+		option.right_margin				= 80;
+		option.gradientBoxWidth			= 20;
+		option.gradientBoxHeight		= 30;	
+		option.gradientLegendShow		= true;	
+		var colours = [{red: 48,green: 141,blue: 50},
+		                {red: 69,green: 174,blue: 71},
+		                {red: 103,green: 193,blue: 105},
+		                {red: 106,green: 255,blue: 109}];		
+		option.colours			= colours;		
+		var colourGradientObject = new ColourGradient(option.zmin, option.zmax, colours);
+		option.colorObj			= colourGradientObject;
+		
+		var series =
+			 [
+		 	    {s_name:'A상',s_data:fObj0['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,0,1)',s_draw:true},		 	   		 	    
+		 	   {s_name:'A상',s_data:fObjm10['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,50,1)',s_draw:true},
+		 	   {s_name:'A상',s_data:fObjm20['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,100,1)',s_draw:true},
+		 	   {s_name:'A상',s_data:fObjm30['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,150,1)',s_draw:true},
+		 	   {s_name:'A상',s_data:fObjm40['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,200,1)',s_draw:true},
+			   {s_name:'A상',s_data:fObjm50['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'spline',s_shape:'circle',s_shapeColor:'rgba(100,128,250,1)',s_draw:true},
+		 	   		 	 	    
+ 		 	    {s_name:'통합시계열(T-td)',s_data:fObj_2['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'metrix',s_shape:'rectangle',s_shapeColor:'rgba(100,128,0,1)',s_draw:true,s_min:0,s_max:10000},
+ 		 	    {s_name:'A상',s_data:fObj_3['reArr']
+		 	    ,s_color:'rgba(55,101,114,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:1,s_chartType:'metrix',s_shape:'windflag',s_shapeColor:'rgba(100,128,0,1)',s_draw:true,s_min:0,s_max:10000},			 	    
+			 ];
+		option.series = series;
+		hChart.redraw(option);
+		
+		function winresize(){
+			hChart.redraw(option);		
+		}
+		$(window).resize(winresize);
+
+	});//초기화 영역-------------------------------------------------------------
+  	</script>	
+</head> 
+<body style='margin:0;overflow:hidden'>
+<div id="chart_container_1" style='position:absolute;float:left;border:0px solid olive;height:100%;width:100%'></div>    
+</body>
+</html>
+

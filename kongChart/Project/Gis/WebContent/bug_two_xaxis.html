@@ -1,0 +1,300 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>차트갤러리</title>
+	<link href="css/layout.css" rel="stylesheet" />
+	<link href="css/edior.css" rel="stylesheet" />  
+
+	<script src="js/jquery-latest.min.js"></script>
+	<script src="js/common.js"></script> 
+	<script type="text/javascript" src="js/kimchart/SurfacePlot2.js"></script>
+	<script type="text/javascript" src="js/kimchart/ColourGradient.js"></script>
+	<script type="text/javascript" src="js/kimchart/glMatrix-0.9.5.min.js"></script>
+	<script type="text/javascript" src="js/kimchart/webgl-utils.js"></script>
+	<script type="text/javascript" src="js/kimchart/parser.js"></script>
+	<script type="text/javascript" src="js/kimchart/kimchart.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/kimchart/kimchart.css">
+	<script language="JavaScript" src="js/color_picker/jq.js"></script>
+	<script language="JavaScript" src="js/color_picker/jq.color.js"></script>
+	<link rel="stylesheet" href="js/color_picker/ui.colorpicker.css"/>
+  	<script src="js/mchart/ColourGradient.js"></script> 
+  	<script src="js/mchart/mbaseChart1.0.js"></script>	
+<link rel="stylesheet" href="js/jquery.svg.package-1.5.0/jquery.svg.css">  	
+	<script src="js/jquery.svg.package-1.5.0/jquery.svg.js"></script>
+	<style>
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 50px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 50px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 50px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 50px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 50px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+	
+	</style>
+	<style> 
+	@keyframes pound2 {
+		from { transform: scale(1); }
+	    20% {
+	        visibility: hidden;
+	    }	
+	    40% {
+	        visibility: hidden;
+	    }	
+	    60% {
+	        visibility: hidden;
+	    }	        	
+	    80% {
+	        visibility: hidden;
+	    }	
+		to { transform: scale(1); }
+	}
+	
+	@-webkit-keyframes pound {
+		from { transform: scale(1); }
+	    20% {
+	        visibility: hidden;
+	    }	
+	    40% {
+	        visibility: hidden;
+	    }	
+	    60% {
+	        visibility: hidden;
+	    }	        	
+	    80% {
+	        visibility: hidden;
+	    }	
+		to { transform: scale(1); }
+	}
+	</style>
+  	
+<style>
+#colorIndex {
+  /* For Safari 5.1 to 6.0 */
+  background: -webkit-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+   /* For Opera 11.1 to 12.0 */
+  background: -o-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+  /* For Fx 3.6 to 15 */
+  background: -moz-linear-gradient(bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1));
+   /* Standard syntax */
+  background: linear-gradient(to bottom,rgba(255,0,0,1),rgba(255,255,0,1),rgba(0,255,0,1),rgba(0,255,255,1),rgba(0,0,255,1)); 
+} 
+</style>
+	<script id="shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec3 aVertexNormal;attribute vec4 aVertexColor;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;uniform mat3 uNMatrix;varying vec4 vColor;uniform vec3 uAmbientColor;uniform vec3 uLightingDirection;uniform vec3 uDirectionalColor;varying vec3 vLightWeighting;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vec3 transformedNormal = uNMatrix * aVertexNormal;float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;vColor = aVertexColor;}</script>
+	<script id="axes-shader-fs" type="x-shader/x-fragment">precision mediump float;varying vec4 vColor;void main(void){gl_FragColor = vColor;}</script>
+	<script id="axes-shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec4 aVertexColor;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;varying vec4 vColor;uniform vec3 uAxesColour;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vColor =  vec4(uAxesColour, 1.0);}</script>
+	<script id="shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec4 vColor;
+	varying vec3 vLightWeighting;
+	void main(void)
+	{
+    gl_FragColor = vec4(vColor.rgb * vLightWeighting, vColor.a);
+	}
+	</script>
+	<script id="texture-shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	varying vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+	void main(void)
+	{
+    gl_FragColor = texture2D(uSampler, vTextureCoord);
+	}
+	</script>
+	<script id="texture-shader-vs" type="x-shader/x-vertex">attribute vec3 aVertexPosition;attribute vec2 aTextureCoord;varying vec2 vTextureCoord;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;void main(void){gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);vTextureCoord = aTextureCoord;}</script>
+
+  	<script>
+  	var series_array = {};var yBaseLines = {};var xTerms = {};var optionx = {};
+
+	  
+	function creat2d(_idx,_series,_optionx){
+			 _optionx.chartId = _idx;
+			 series_array[_idx]=_series;
+			 yBaseLines[_idx] = _optionx.yBaseLines;
+			 xTerms[_idx] = _optionx.xTerms;
+			 optionx[_idx] = _optionx;
+			 var mChart = setChart(_idx,$('#'+'chart_'+_idx),optionx[_idx]); 
+	}  			
+		
+	function create3d(chartDivId,_canvas){
+			var colour1 = {red: 0,green: 0,blue: 255};
+		    var colour2 = {red: 0,green: 255,blue: 255};
+		    var colour3 = {red: 0,green: 255,blue: 0};
+		    var colour4 = {red: 255,green: 255,blue: 0};
+		    var colour5 = {red: 255,green: 0,blue: 0};
+			var colours = [colour1, colour2, colour3, colour4, colour5];
+			var numRows = 60;var numCols = 64;
+			var titles = {
+				x: 'Phase(위상)',
+				y: 'Time(초)',
+				z: ''
+			};
+			var labels = {
+				x: [0, 90,180,270,360],
+				y: [0, 10, 20, 30, 40, 50, 60],
+				z: [-20,0,20,40,60]
+			};
+			new_chart = new KimsChart(document.getElementById(chartDivId));
+			new_chart.init(numRows, numCols, titles, labels, colours,_canvas);
+			return new_chart;
+	}
+		
+		
+	$(document).ready(function() {
+	   		
+//chart9 : X축2개
+			var series = [
+				{s_name:'선로3',s_data:getSampleDataRightX(getSampleData(500,2,1007),10,10000,1007),s_color:'rgba(237,28,36,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'spline',s_shape:'circle',s_draw:true}
+			   ,{s_name:'선로4',s_data:getSampleDataRightX(getSampleData(500,2,1007),10,10000,1007),s_color:'rgba(37,218,16,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'spline',s_shape:'circle',s_draw:true}
+		 	     
+			 ];	 			
+			var options = jQuery.extend(true, {}, defaultOption);
+			options.series = series;
+			options.menuVisible = true;
+			options.halfXAxis = true;
+			options.leftIndexs = 1000;
+			options.lyWidth = 0.06;
+			options.ryWidth = 0;
+			options.bHeight = 0.28;
+			options.title = '실시간(1초) X축2개';
+			options.x_label = 'XL';
+			options.y_label = 'RL';	
+			options.xangle = 90;
+			options.yBaseLines = defaultYBaseLines.slice(0);
+			options.xTerms = defaultXTerms.slice(0);			
+	   		creat2d(0,series,options);  	   	
+	   		setInterval(function(){series_array[0][0].s_data=getRealData(series_array[0][0],10); series_array[0][1].s_data=getRealData(series_array[0][1],10); redraw(0);}, 1000); 	
+
+
+
+			var series = [
+				{s_name:'선로2',s_data:getSampleDataRightX(getSampleData(500,2,107),10,100,107),s_color:'rgba(237,28,36,1)',s_lineWidth:'1.5',s_sizeMin:1,s_sizeDefault:5,s_chartType:'spline',s_shape:'circle',s_draw:true}
+		 	     
+			 ];	 			
+			var options = jQuery.extend(true, {}, defaultOption);
+			options.series = series;
+			options.menuVisible = true;
+			options.halfXAxis = true;
+			options.leftIndexs = 100;
+			options.lyWidth = 0.06;
+			options.ryWidth = 0;
+			options.bHeight = 0.28;
+			options.title = '실시간(1초) X축2개';
+			options.x_label = 'XL';
+			options.y_label = 'RL';	
+			options.xangle = 90;
+			options.yBaseLines = defaultYBaseLines.slice(0);
+			options.xTerms = defaultXTerms.slice(0);			
+	   		creat2d(1,series,options);  	   	
+	   		setInterval(function(){series_array[1][0].s_data=getRealData(series_array[1][0],100); redraw(1);}, 1000); 	
+
+			
+	});//초기화 영역-------------------------------------------------------------
+	
+
+  	</script>	
+</head> 
+<body>
+	
+	                        <div class="areaRight" style="width:80%;;height:60%;margin-top:10px">
+		                        <div style="width:100%;height:100%;margin: 0 auto;">
+									<div id="chart_0" style='width:100%;height:100%;padding:0px;border:0px solid #000;margin: 0 auto;overflow:hidden'></div>
+								</div>
+	                        </div>  
+
+	                        <div class="areaRight" style="width:80%;;height:60%;margin-top:10px">
+		                        <div style="width:100%;height:100%;margin: 0 auto;">
+									<div id="chart_1" style='width:100%;height:100%;padding:0px;border:0px solid #000;margin: 0 auto;overflow:hidden'></div>
+								</div>
+	                        </div>  
+
+                                         
+</body>
+</html>
+
