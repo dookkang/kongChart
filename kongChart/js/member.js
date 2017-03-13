@@ -79,3 +79,24 @@
 			top.location.href = "/php/member/memberUpdate.html";					
 		}
 	};
+	function fndel(){
+		if(confirm('탈퇴하시겠습니까?')){
+			top.location.href = "/php/member/memberDel.html";					
+		}
+	};
+	function delIn(){
+		top.location.href = "/php/member/logout.html";	
+	};
+	
+	function delPopup() { 
+		var openWinId = 'dupWinChk';	
+		 		
+		window.open('',openWinId,'scrollbars=yes,toolbar=yes,resizable=yes,width=400,height=200,left=0,top=0');
+			fm.action = "/php/member/memberJoinSel.php"; 
+			fm.method = 'post';
+			fm.target = openWinId; 
+			fm.submit();
+	}; 
+	
+	
+	
