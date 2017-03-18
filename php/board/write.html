@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>게시판</title>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+</head>
+
+<body>
+<center>
+<br>
+<form action=/php/board/insert.html method=post>
+<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
+<tr>
+	<td height=20 align=center bgcolor=#999999>
+	<font color=white><B>글쓰기</B></font>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=white>
+	<table border=0 width=500 align=center>
+		<tr>
+			<td width=60 align=left >이름</td>
+			<td align=left >
+				<Input type=text name=name size=20 maxlength=10>
+			</td>
+		</tr>
+		<tr>
+			<td width=60 align=left >이메일</td>
+			<td align=left >
+				<Input type=text name=email size=20 maxlength=25>
+			</td>
+		</tr>
+		<tr>
+			<td width=60 align=left >비밀번호</td>
+			<td align=left >
+				<Input type=password name=pass size=8 maxlength=8>
+				(수정,삭제시 필요)
+			</td>
+		</tr>
+		<tr>
+			<td width=60 align=left >제목</td>
+			<td align=left >
+				<Input type=text name=title size=60 maxlength=35>
+			</td>
+		</tr>
+		<tr>
+			<td width=100 align=left >내용</td>
+			<td align=left >
+				<TEXTAREA name=content rows='20' cols='80' style="width:95%;"></TEXTAREA>	
+			</td>
+		</tr>
+		<tr>
+			<td colspan=10 align=center>
+				<Input type=submit value="글저장">
+				<Input type=reset value="다시쓰기">
+				<Input type=button value="뒤로가기" onclick="history.back(-1)">
+			</td>
+		</tr>
+	</table>
+</td>
+</tr>
+</form>
+</center>
+</body>
+</html>

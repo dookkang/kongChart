@@ -1,0 +1,46 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+ abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin:0;
+	padding:0;
+	border:0;
+	font-size:100%;
+	font:inherit;
+	vertical-align:baseline;
+}
+body {
+	line-height:1;
+	word-break:break-all
+}
+body, select, input, textarea {font-family:'Malgun Gothic', Dotum,sans-serif;font-size:13px;color:#555;letter-spacing:-1px;line-height:normal}
+input[type=text], input[type=password] {height:21px;padding:0 4px;border:1px solid #bfbfbf;background:#fff;vertical-align:middle;line-height:23px;letter-spacing:0}
+#button {width:500px;margin:0;padding:0;border:1 none;font-family:'Malgun Gothic', Dotum,sans-serif;text-align:center;letter-spacing:-1px;cursor:pointer}
+.blind, legend {overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0}
+label {font-weight:bold;width:25px;margin-right:5px;display:inline-block}	
+.mb10 {margin-bottom:10px !important}
+.mt30 {margin-top:30px !important}
+.btn_2xl {display:inline-block;padding:15px 25px 16px 25px;font-size:17px;font-weight:bold;line-height:17px}
+.nv {border:1px solid #0c316d;background-color:#1f4787;color:#fff}
+.wid100p {width:100%}
+#wrap {position:relative;width:100%;margin:0 auto}
+#container {position:relative;width:100%;min-height:100%;margin:0 auto;padding-bottom:90px}
+.adm_login_wrap {margin-top:200px;font-size:15px;color:#555;text-align:center;line-height:22px}
+.adm_login_wrap > h1 {margin-bottom:16px;font-size:25px;font-weight:normal;color:#010101}
+.adm_login_wrap > h1 strong {font-weight:normal;color:#1d64d6}
+.adm_login_box {width:350px;margin:0 auto;padding:37px 64px 40px 64px;border:1px solid #dedede;border-top:2px solid #686970;background:#fbfbfb}
+.adm_login_box > p {margin-bottom:15px;font-size:14px;color:#333;text-align:left}
+.adm_login_box input {width:290px;padding:13px 10px 14px 10px;font-size:14px}
+.adm_login_box input.off {background:#fff none}
+.copyright {width:478px;padding:15px 0 26px 0;margin:0 auto;background:#fbfbfb url('adm_login_bg.png') repeat-x 0 bottom;border-left:1px solid #dedede;border-right:1px solid #dedede;font-size:11px;line-height:11px;letter-spacing:0}
+table,button {width:500px;border:0}
+a {font-family:'Malgun Gothic', Dotum,sans-serif;font-size:12px;}

@@ -1,0 +1,30 @@
+<?php $id = $_GET[id];?>
+<html>
+<head>
+<title>삭제</title>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<body topmargin=0 leftmargin=0 text=#464646>
+<center>
+<br>
+<form name="fm" method="post" action="/php/board/del.html?id=<?php print $id;?>" >
+	<table width=300 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
+	<tr>
+		<td height=20 align=center bgcolor=#999999>
+			<font color=white><B>비 밀 번 호</b></font>
+		</td>
+	</tr>
+	<?php print $id; ?>
+	<tr>
+		<td align=center>
+			<font color=white><B>비밀번호 :</B></font>
+			<INPUT type=password name=pass size=8>
+			<INPUT type=submit value="확 인">
+			<INPUT type=button value="취 소" onclick="history.back(-1)">
+		</td>
+	</tr>
+	</table>
+</form>
+</center>
+</body>
+</head>
+</html>

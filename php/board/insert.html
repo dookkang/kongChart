@@ -1,0 +1,32 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<?php 
+	$id = uniqid('T_BD_CUS_');
+	$name = $_POST[name];
+	$email = $_POST[email];
+	$pass = $_POST[pass];
+	$title = $_POST[title];
+	$content = $_POST[content];
+
+	$query = "INSERT INTO T_BD_CUS
+	(id, name, email, pass, title, content, wdate, ip, view)
+	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', 0)";
+	if(mysql_query($query, $conn)){
+?>
+		<h4>처리되었습니다.</h4>
+		<a href="/php/board/list.html"> 리스트 </a>
+<?php 
+		session_destroy();
+	}else{
+?>
+		<a href="/php/board/list.html"> 리스트 </a>
+<?php
+	}
+	mysql_close($conn);
+
+	//$result = mysql_query($query, $conn)
+	//echo ("<meta http-equiv='Refresh' content='1'; URL='list.html'>");
+?>
+<center>
+<font size=2>처리되었습니다.</font>
+</center>

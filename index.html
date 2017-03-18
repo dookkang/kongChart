@@ -1,0 +1,16 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+ 	<title>MainPage</title>
+</head>			
+	<frameset rows="44px,*">
+		<frame src="/php/layout/top.html">	
+		<frameset cols="25%, 75%" border="0">
+		    <frame name='leftholl' src="/kongChart/left.html" name="left" scrolling="yes" marginwidth="10" marginheight="14" noresize>
+		    <frame name='c3' src="/kongChart/kongChart17.html" name="right" scrolling="yes" marginwidth="10" marginheight="14" noresize>
+		</frameset>	
+	</frameset>
+</html>

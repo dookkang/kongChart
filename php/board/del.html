@@ -1,0 +1,45 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<html>
+<head>
+<title>member</title>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">	
+</head>
+<body>
+<?php
+    	$id = $_GET[id];
+		$pass = $_REQUEST[pass];
+		
+		//print "id--->".$id;
+		
+	$query = "SELECT pass FROM T_BD_CUS WHERE id=".$id;
+	print $id;
+	print $query;
+	$result = mysql_query($query, $conn);
+	$row = mysql_fetch_array($result);
+		
+	
+		$queryp = "DELETE FROM T_BD_CUS WHERE id=".$id;
+		
+		print "pass1--->".$pass;
+		print "pass2--->".$row[pass];
+		
+	if ($pass==$row[pass]){
+		$resultp = mysql_query($queryp, $conn);
+		print "삭제되었습니다.";
+	?>
+		<a href="/php/board/list.html"> 리스트 </a>
+	<?php
+	}
+	else {
+		print "비밀번호가 틀립니다";
+	?>
+		<a href="/php/board/list.html"> 리스트 </a>
+	<?php
+	exit;
+	};
+	mysql_close($conn);
+?>
+
+</body>
+</html>

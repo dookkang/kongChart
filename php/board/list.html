@@ -1,0 +1,71 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<html>
+<head>
+<title>목록</title>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">	
+<meta name="Author" content="DuHan.kim">
+<meta name="Keywords" content="kong chart">
+<meta name="Description" content="kong chart">
+</head>
+<body topmargin=0 leftmargin=0 text=#464646>
+<center>
+<br>
+<font size=2> 목록</font>
+<br>
+<br>
+<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
+	<tr height=20 bgcolor=#999999>
+		<td width=30 align=center>
+			<font color=white>번호</font>
+		</td>
+		<td width=370 align=center>
+			<font color=white>제목</font>
+		</td>
+		<td width=50 align=center>
+			<font color=white>글쓴이</font>
+		</td>
+		<td width=60 align=center>
+			<font color=white>날짜</font>
+		</td>
+		<td width=40 align=center>
+			<font color=white>조회수</font>
+		</td>
+	</tr>
+<?php
+	$query = "SELECT * FROM T_BD_CUS ORDER BY id DESC ";
+	$result = mysql_query($query, $conn);
+	while($row = mysql_fetch_array($result))
+	{
+?>
+	<tr>
+		<td height=20 bgcolor=white name="id" >
+		<?php print $row[id];?>
+		</td>
+		<td height=20 bgcolor=white align=center>
+		<a href="/php/board/read.html?id=<?php print $row[id];?>"><?php print $row[title];?></a>
+		</td>
+		<td height=20 bgcolor=white align=center>
+		<?php print $row[name];?>
+		</td>
+		<td height=20 bgcolor=white align=center>
+		<?php print $row[wdate];?>
+		</td>
+		<td height=20 bgcolor=white align=center>
+		<?php print $row[view];?>
+		</td>
+	</tr>
+<?php
+  }
+
+	mysql_close($conn);
+?>
+			
+</table>
+<center>
+<a href="/php/board/write.html">글쓰기</a>
+</center>
+
+
+</center>
+</body>
+</html>
