@@ -23,6 +23,7 @@
 	}else{
 		header('Location: /php/member/login.html');   
 	}
+	///테스트
 ?>		
 </body>
 </html>
