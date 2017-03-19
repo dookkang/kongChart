@@ -1,3 +1,4 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <html>
 <head>
 <title>게시판</title>
@@ -20,7 +21,7 @@
 		<tr>
 			<td width=60 align=left >이름</td>
 			<td align=left >
-				<Input type=text name=name size=20 maxlength=10>
+				<Input readonly type=text name=name size=20 maxlength=25 value="<?php print $cltId;?>">
 			</td>
 		</tr>
 		<tr>

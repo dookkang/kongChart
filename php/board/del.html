@@ -17,20 +17,27 @@
 	$row = mysql_fetch_array($result);
 		
 	
-		$queryp = "DELETE FROM T_BD_CUS WHERE id=".$id;
+		$queryp = "DELETE FROM T_BD_CUS WHERE id='".$id."'";
 		
 		
 	if ($pass==$row[pass]){
 		$resultp = mysql_query($queryp, $conn);
 		print "삭제되었습니다.";
 	?>
-		<a href="/php/board/list.html"> 리스트 </a>
+		<!--<a href="/php/board/list.html"> 리스트 </a>-->
+		<script>
+		location.href = "/php/board/list.html";
+		</script>
 	<?php
 	}
 	else {
-		print "비밀번호가 틀립니다";
-	?>
-		<a href="/php/board/list.html"> 리스트 </a>
+		?>
+	<center>
+		<br><br><br><br>
+		<?print "비밀번호가 틀립니다";?>
+		<br>
+		<a href="/php/board/list.html"> [목 록] </a>
+	</center>
 	<?php
 	exit;
 	};

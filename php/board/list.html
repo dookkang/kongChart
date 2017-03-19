@@ -1,13 +1,14 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <html>
 <head>
-	<title>목록</title>
+	<title>자 유 게 시 판</title>
 	<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 </head>
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
 <br>
-<font size=2> 목록
+<font size=2> 자 유 게 시 판
 <br>
 <br>
 <table width=80% border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
@@ -29,17 +30,51 @@
 		</td>
 	</tr>
 <?php
+	$cnt = 0;
+	$cntquery = "SELECT count(*) as 'cnt' FROM `T_BD_CUS` WHERE 1";
+	$cntresult = mysql_query($cntquery, $conn);
+	while($cntrow = mysql_fetch_array($cntresult))
+	{
+		$cnt = $cntrow[cnt];
+	}
 	
-	$query = "SELECT * FROM T_BD_CUS ORDER BY id DESC ";
+
+?>
+	
+<?php
+	$cr = 0;
+	$cquery = "SELECT ceil(count(*)/3) as 'co' FROM `T_BD_CUS` WHERE 1";
+	$cresult = mysql_query($cquery, $conn);
+	while($crow = mysql_fetch_array($cresult))
+	{
+		$cr = $crow[co];
+	}
+
+?>
+
+	
+<?php
+	$pageNum = $_REQUEST[pageNum];
+	if(is_null($pageNum)){
+		$pageNum = 1;
+	};
+
+
+	$from = ($pageNum-1)*3;
+	$query = "select * from T_BD_CUS order by wdate desc limit $from,3 ";
 	$result = mysql_query($query, $conn);
 	$count = mysql_num_rows($result);
 	$num = $count;
+
+	$n = 0;
+	$nnn = $cnt-(($pageNum-1)*3);
 	while($row = mysql_fetch_array($result))
 	{
+	
 ?>
 	<tr>
 		<td height=20 bgcolor=white name="id" align='center'>
-		<?php print $num;?>
+		<?php print $nnn--;?>
 		</td>
 		<td height=20 bgcolor=white align=left>
 		<a href="/php/board/read.html?id=<?php print $row[id];?>"><?php print $row[title];?></a>
@@ -55,16 +90,34 @@
 		</td>
 	</tr>
 <?php
+	$n++;
 	$num--;
   }
 
-	mysql_close($conn);
+	
 ?>
 			
 </table>
-<center>
-<a href="/php/board/write.html">글쓰기</a>
-</center>
+
+
+
+
+<?php
+	mysql_close($conn);
+?>
+<?php
+	for($count = 1 ; $count <=$cr ; $count++){
+?>
+	<a href="/php/board/list.html?pageNum=<?php print $count;?>"><?php print $count.'&nbsp;&nbsp;';?></a>
+<?php	
+	};
+?>
+
+
+
+	<br>
+	<a href="/php/board/write.html">글쓰기</a>
+
 
 
 </center>

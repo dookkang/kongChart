@@ -1,5 +1,7 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php 
 	$id = uniqid('T_BD_CUS_');
 	$name = $_POST[name];
@@ -13,10 +15,11 @@
 	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', 0)";
 	if(mysql_query($query, $conn)){
 ?>
-		<h4>처리되었습니다.</h4>
-		<a href="/php/board/list.html"> 리스트 </a>
+		<!-- <a href="/php/board/list.html"> 리스트 </a> -->
+		<script>
+		location.href = "/php/board/list.html";
+		</script>
 <?php 
-		session_destroy();
 	}else{
 ?>
 		<a href="/php/board/list.html"> 리스트 </a>
