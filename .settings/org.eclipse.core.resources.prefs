@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
+encoding//php/board/edit.html=UTF-8
+encoding//php/board/insert.html=UTF-8
+encoding//php/board/list.html=UTF-8
+encoding//php/board/predel.html=UTF-8
+encoding//php/board/read.html=UTF-8
+encoding//php/board/write.html=UTF-8
 encoding//php/layout/top.html=UTF-8
 encoding/<project>=UTF-8

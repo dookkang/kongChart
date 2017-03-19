@@ -1,47 +1,47 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <html>
 <head>
-<title>목록</title>
-<meta http-equiv="Content-type" content="text/html; charset=UTF-8">	
-<meta name="Author" content="DuHan.kim">
-<meta name="Keywords" content="kong chart">
-<meta name="Description" content="kong chart">
+	<title>목록</title>
+	<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 </head>
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
 <br>
-<font size=2> 목록</font>
+<font size=2> 목록
 <br>
 <br>
-<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
+<table width=80% border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
 	<tr height=20 bgcolor=#999999>
-		<td width=30 align=center>
-			<font color=white>번호</font>
+		<td width=10% align=center style='color:white'>
+			번호
 		</td>
-		<td width=370 align=center>
-			<font color=white>제목</font>
+		<td align=center style='color:white'>
+			제목
 		</td>
-		<td width=50 align=center>
-			<font color=white>글쓴이</font>
+		<td width=10% align=center style='color:white'>
+			글쓴이
 		</td>
-		<td width=60 align=center>
-			<font color=white>날짜</font>
+		<td width=20% align=center style='color:white'>
+			날짜
 		</td>
-		<td width=40 align=center>
-			<font color=white>조회수</font>
+		<td width=10% align=center style='color:white'>
+			조회수
 		</td>
 	</tr>
 <?php
+	
 	$query = "SELECT * FROM T_BD_CUS ORDER BY id DESC ";
 	$result = mysql_query($query, $conn);
+	$count = mysql_num_rows($result);
+	$num = $count;
 	while($row = mysql_fetch_array($result))
 	{
 ?>
 	<tr>
-		<td height=20 bgcolor=white name="id" >
-		<?php print $row[id];?>
+		<td height=20 bgcolor=white name="id" align='center'>
+		<?php print $num;?>
 		</td>
-		<td height=20 bgcolor=white align=center>
+		<td height=20 bgcolor=white align=left>
 		<a href="/php/board/read.html?id=<?php print $row[id];?>"><?php print $row[title];?></a>
 		</td>
 		<td height=20 bgcolor=white align=center>
@@ -55,6 +55,7 @@
 		</td>
 	</tr>
 <?php
+	$num--;
   }
 
 	mysql_close($conn);

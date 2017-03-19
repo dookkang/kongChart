@@ -1,7 +1,7 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <html>
 <head>
-<title>글수정</title>
+<title>수정</title>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <script type="text/javascript" src="/js/member.js"></script>
 </head>
@@ -17,8 +17,7 @@
 	</tr>
 <?php
 	$id = $_GET[id];
-	$query = "SELECT * FROM T_BD_CUS WHERE id=".$id;
-	print $query;
+	$query = "SELECT * FROM T_BD_CUS WHERE id='".$id."'";
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
 ?>
@@ -42,11 +41,11 @@
 				<td width=60 align=left >비밀번호</td>
 				<td align=left >
 					<Input type=password name="pass" size=8>
-					(비밀번호가 맞아야가능)
+					(비밀번호가 맞아야 수정가능)
 				</td>
 			</tr>
 			<tr>
-				<td width=60 align=left >제목</td>
+				<td width=60 align=left >제 목</td>
 				<td align=left >
 					<Input type=text name="title" size=60 value="<?php print $row[title];?>">
 				</td>
@@ -59,7 +58,7 @@
 			</tr>
 			<tr>
 				<td colspan=10 align=center>
-					<INPUT type=submit value="확 인">
+					<INPUT type=submit value="완 료">
 					<INPUT type=button value="취 소" onclick="history.back(-1)">
 				</td>
 			</tr>

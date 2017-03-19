@@ -16,7 +16,7 @@
 		
 		//print "id--->".$id;
 		
-	$query = "SELECT pass FROM T_BD_CUS WHERE id=".$id;
+	$query = "SELECT pass FROM T_BD_CUS WHERE id='".$id."'";
 	
 	//print "query--->".$query;
 	$result = mysql_query($query, $conn);

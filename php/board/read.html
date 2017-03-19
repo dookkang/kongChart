@@ -9,31 +9,31 @@
 <br>
 <?php
 	$id = $_GET[id];
-	$query = "SELECT * FROM T_BD_CUS WHERE id=".$id ;
-	print $query;
+	$query = "SELECT * FROM T_BD_CUS WHERE id='".$id."'" ;
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
 ?>
-<table width=580 border=0 cellpadding=2 cellspacing=1>
+<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#999999>
 	<tr>
-		<td height=20 align=center>
+		<td height=20 align=center bgcolor=#999999>
 			<font color=white><B><?php print $row[title]?></B></font>
 		</td>
 	</tr>
+<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
 	<tr>
-		<td width=50 height=20 align=center>이름</td>
-		<td width=240><?php print $row[name];?></td>
-		<td width=50 height=20 align=center>이메일</td>
-		<td width=240><?php print $row[email];?></td>
+		<td width=50 height=20 align=center bgcolor=#EEEEEE>이름</td>
+		<td width=240 bgcolor=white><?php print $row[name];?></td>
+		<td width=50 height=20 align=center bgcolor=#EEEEEE>이메일</td>
+		<td width=240 bgcolor=white><?php print $row[email];?></td>
 	</tr>
 	<tr>
-		<td width=50 height=20 align=center>날짜</td>
-		<td width=240><?php print $row[wdate];?></td>
-		<td width=50 height=20 align=center>조회수</td>
-		<td width=240><?php print $row[view];?></td>
+		<td width=50 height=20 align=center bgcolor=#EEEEEE>날짜</td>
+		<td width=240 bgcolor=white><?php print $row[wdate];?></td>
+		<td width=50 height=20 align=center bgcolor=#EEEEEE>조회수</td>
+		<td width=240 bgcolor=white><?php print $row[view];?></td>
 	</tr>
 	<tr>
-		<td colspan=4>
+		<td colspan=4 bgcolor=white style='color:black'>
 		<pre><?php print $row[content];?></pre>
 		<table width=100%>
 			<tr>

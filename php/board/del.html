@@ -12,17 +12,13 @@
 		
 		//print "id--->".$id;
 		
-	$query = "SELECT pass FROM T_BD_CUS WHERE id=".$id;
-	print $id;
-	print $query;
+	$query = "SELECT pass FROM T_BD_CUS WHERE id='".$id."'";
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
 		
 	
 		$queryp = "DELETE FROM T_BD_CUS WHERE id=".$id;
 		
-		print "pass1--->".$pass;
-		print "pass2--->".$row[pass];
 		
 	if ($pass==$row[pass]){
 		$resultp = mysql_query($queryp, $conn);
