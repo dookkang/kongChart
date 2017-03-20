@@ -27,30 +27,34 @@ function createOption(_chart,_chartId){
 function createSeries(_s_name,_s_chartType,_data,
 		_max,_min,_divNum){
 	var fObj1 = null;
+
 	if(Array.isArray(_data)){
 		fObj1 = chartUtil.formatData_profile2(_data,false,_max,_min,_divNum);
+
 	}else{
 		fObj1 = _data;
+
 	}
 	
 
 	var a = {
-	s_name:_s_name,
-	s_data:fObj1['reArr'],
-	s_color:'rgba(255,201,14,1)',
-	s_lineWidth:'1',
-	s_sizeMin:1,
-	s_sizeDefault:3,
-	s_chartType:_s_chartType,
-	s_shape:'rect',
-	s_shapeColor:'rgba(0,128,192,1)',
-	s_draw:true,
-	s_min:fObj1['miny'],
-	s_max:fObj1['maxy'],
-	s_y_mark_cnt:fObj1['y_mark_cnt'],
-	s_axis:'L',
-	s_unit:'건'				 	    
+		s_name:_s_name,
+		s_data:fObj1['reArr'],
+		s_color:'rgba(255,201,14,1)',
+		s_lineWidth:'1',
+		s_sizeMin:1,
+		s_sizeDefault:3,
+		s_chartType:_s_chartType,
+		s_shape:'rect',
+		s_shapeColor:'rgba(0,128,192,1)',
+		s_draw:true,
+		s_min:fObj1['miny'],
+		s_max:fObj1['maxy'],
+		s_y_mark_cnt:fObj1['y_mark_cnt'],
+		s_axis:'L',
+		s_unit:'건123'				 	    
 	};
+
 	return a;
 };
 
@@ -257,10 +261,10 @@ $(window).resize(winresize);
 			option.toFixedY					= 2;//Y1,Y2양쪽축 모두함께 적용 표시할 표수점자리수		
 			option.bottom_title_align		= 'center';//x축 타이틀 위치
 			
-			option.min = 0;
+			option.min = 0;////////////////////////////////////왼쪽Y축의 min값
+			option.min_R = 0;//////////////////////////////////오른쪽Y축의 min값
 			/* 1번 시리즈 [주의 : createSeries사용시 이름이 반드시 달라야함!!!]*/
 			var aSeries 	= createSeries('any sereis A','bar',data6_1);//3번,4번argu->max=null,min=null,divNum=null주면 동적으로 구함
-			console.dir(aSeries);
 			aSeries.s_unit	='개';//툴팁에 표시될 Y값의단위
 			aSeries.s_sizeDefault = 1;//점의 크기
 			aSeries.s_shape='circle';//점의 모양
@@ -271,14 +275,13 @@ $(window).resize(winresize);
 			
 			/* 2번 시리즈 [주의 : createSeries사용시 이름이 반드시 달라야함!!!]*/
 			var aSeries2 	= createSeries('any sereis B','line',data6_2);//3번,4번argu->max=null,min=null,divNum=null주면 동적으로 구함
-			console.dir(aSeries2);
 			aSeries2.s_unit	='개';//툴팁에 표시될 Y값의단위
 			aSeries2.s_sizeDefault = 2;//점의 크기
 			aSeries2.s_shape='rect';//점의 모양
 			aSeries2.s_color='rgba(231,158,228,1)';//시리즈의 색상, (0,128,192)색은 블루
 			aSeries2.s_lineWidth=2;
 			aSeries2.s_axis = 'R';
-			aSeries2.s_unit='%';
+
 			
 			option.series.push(aSeries2);
 

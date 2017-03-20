@@ -19,7 +19,6 @@ HChart = function(_container) {
 	this.defaultColours = [
 		                {red: 210,green: 206,blue: 233},
 		                {red: 185,green: 176,blue: 239},
-		                {red: 168,green: 148,blue: 217},
 		                {red: 142,green: 123,blue: 202},
 		                {red: 122,green: 77,blue: 255},
 		                {red: 101,green: 62,blue: 189},
@@ -662,6 +661,7 @@ HChart.prototype.getMagneticX = function(_ex) {
 					}
 
 				}
+
 				return aPointSeriesMap;				
 			}			
 	}
@@ -685,51 +685,119 @@ HChart.prototype.init = function(_option) {
 		_option.y_mark_cnt 				= _option.series[0]['s_y_mark_cnt'];	
 	}
 	if(_option['yAxisCalcMethod'] != 'manual' && _option['minmaxset'] != true){
-		
-		var _s_max = -9999999999;
-		var _s_min = 9999999999;
-		var _s_y_mark_cnt = 1;
-		for(var i=0;i < _option.series.length; i++){
-			var aMax = _option.series[i]['s_max'];
-			if(aMax > _s_max){
-				_s_max = aMax;
-			}
-			var aMin = _option.series[i]['s_min'];
-			if(aMin < _s_min){
-				_s_min = aMin;
-			}		
-		}
-		if(_s_max != -9999999999 && _s_min != 9999999999){
 
-			var o2 = chartUtil.getMax(_s_max,_s_min);	
-
-			for(var i=0;i < _option.series.length; i++){
-				_option.series[i]['s_max'] = o2['reMax'];
-
-				_option.series[i]['s_min'] = o2['reMin'];
-				_option['y_mark_cnt'] = o2['divNum'];
-
-				if(_option.min == null){
-					var m = o2['reMax']-o2['reMin'];
-					var addVal = m/_option['y_mark_cnt'];
-					_option.series[i]['s_min'] -= addVal;//최소값늘리고
-					_option['y_mark_cnt'] +=1;
-				}else{
-					_option.series[i]['s_min'] = _option.min;
-				}	
-					
-			}			
-			_option['minmaxset'] = true;
+		if(_option['bothYAxis']){
 			
-		}else{		
-			this.setOption(_option);
-			return;
+
+			var _s_y_mark_cnt = null;
+			for(var i=0;i < _option.series.length; i++){
+				var _s_max = -9999999999;
+				var _s_min = 9999999999;
+			
+				var aMax = _option.series[i]['s_max'];
+				if(aMax > _s_max){
+					_s_max = aMax;
+				}
+				var aMin = _option.series[i]['s_min'];
+				if(aMin < _s_min){
+					_s_min = aMin;
+				}		
+				if(_s_max != -9999999999 && _s_min != 9999999999){
+					var o2 = chartUtil.getMax(_s_max,_s_min);	
+					
+					_option.series[i]['s_max'] = o2['reMax'];
+					_option.series[i]['s_min'] = o2['reMin'];
+					if(_s_y_mark_cnt == null){
+						_option['y_mark_cnt'] = o2['divNum'];
+						_s_y_mark_cnt = _option['y_mark_cnt'];						
+
+					}else{
+						_option['y_mark_cnt'] = _s_y_mark_cnt;
+					}
+					_option.series[i]['y_mark_cnt'] = _s_y_mark_cnt;
+
+					if(_option.series[i]['s_axis'] != 'R'){
+						if(_option.min == null){
+							var m = o2['reMax']-o2['reMin'];
+							var addVal = m/_option['y_mark_cnt'];
+							_option.series[i]['s_min'] -= addVal;//최소값늘리고
+							_option['y_mark_cnt'] +=1;
+						}else{						
+							_option.series[i]['s_min'] = _option.min;
+						}							
+					}else{
+						if(_option.min_R == null){
+							var m = o2['reMax']-o2['reMin'];
+							var addVal = m/_option['y_mark_cnt'];
+							_option.series[i]['s_min'] -= addVal;//최소값늘리고
+							_option['y_mark_cnt'] +=1;
+						}else{						
+							_option.series[i]['s_min'] = _option.min_R;
+						}											
+					}
+
+
+						
+		
+					_option['minmaxset'] = true;
+
+				}else{		
+					
+					this.setOption(_option);
+					return;
+				}				
+			}
+
+			
+		}else{
+			var _s_max = -9999999999;
+			var _s_min = 9999999999;
+			var _s_y_mark_cnt = 1;
+			for(var i=0;i < _option.series.length; i++){
+				var aMax = _option.series[i]['s_max'];
+				if(aMax > _s_max){
+					_s_max = aMax;
+				}
+				var aMin = _option.series[i]['s_min'];
+				if(aMin < _s_min){
+					_s_min = aMin;
+				}		
+			}
+			if(_s_max != -9999999999 && _s_min != 9999999999){
+
+				var o2 = chartUtil.getMax(_s_max,_s_min);	
+
+				for(var i=0;i < _option.series.length; i++){
+					_option.series[i]['s_max'] = o2['reMax'];
+
+					_option.series[i]['s_min'] = o2['reMin'];
+					_option['y_mark_cnt'] = o2['divNum'];
+
+					if(_option.min == null){
+						var m = o2['reMax']-o2['reMin'];
+						var addVal = m/_option['y_mark_cnt'];
+						_option.series[i]['s_min'] -= addVal;//최소값늘리고
+						_option['y_mark_cnt'] +=1;
+					}else{
+						_option.series[i]['s_min'] = _option.min;
+					}	
+						
+				}			
+				_option['minmaxset'] = true;
+				
+			}else{		
+				this.setOption(_option);
+				return;
+			}
+			
+			
 		}
+
 
 		
 		
 	}
-	
+
 	if(_option['barVertical']){
 		for(var i=0;i< _option.series.length; i++){
 			if(_option.series[i]['s_min'] < 0){
@@ -846,10 +914,7 @@ HChart.prototype.resize = function() {
 
 HChart.prototype.redraw = function(_option,_param1) {
 	this.resize();
-	
     var goDraw = false;
-
-	
 	if(_option['series'].length > 0){
 		var s_data = _option['series'][0].s_data;
 		var s_draw = _option['series'][0].s_draw;
@@ -2417,13 +2482,25 @@ HChart.prototype.drawYAxis = function() {
 };
 HChart.prototype.drawYAxisR = function() {
 	if(!this.o()['multiYAxis']){
-		this.mainCanvasBufferCtx.font 	= this.o()['axisTitleFont'];
-		this.mainCanvasBufferCtx.fillStyle = this.o()['commonTextColor'];
+
 		if(typeof this.o()['unitLabel_Verti_R'] != 'undefined'){
-			this.mainCanvasBufferCtx.fillText(this.o()['unitLabel_Verti_R'],
-					this.getBottomAxisWidth()+this.getLeftAxisWidth()+this.o()['gep_space'],
-					this.o()['top_margin']+this.o()['fontHeight']);	
+			
+			var labelLeng = this.mainCanvasBufferCtx.measureText(this.o()['unitLabel_Verti']).width+this.o()['gep_space'];
+			this.mainCanvasBufferCtx.fillStyle = this.o()['color'];
+			try{
+				this.drawText(this.mainCanvas.width-14,
+						((this.o()['top_margin']+this.getLeftAxisHeight())-(this.getLeftAxisHeight()-labelLeng)/2)-labelLeng
+						,this.o()['color']
+						,-270,this.o()['unitLabel_Verti_R']);		
+			}catch(e){
+				console.dir(e);
+			}
 		}
+		
+		
+
+
+			
 	}
 	
 	var pmode  = this.o()['pivot_mode'];

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"  style='margin:0;height:100%'>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>ColumnChart</title>
+	<script src="js/mchart/jquery-1.11.1.min.js"></script>	
+	<script src="js/mchart/kongManager.js"></script>	
+  	<script src="js/mchart/kongSampleData.js"></script>  	  	
+  	<script src="js/mchart/kongChart.js"></script>		
+  	<script>
+
+	$(document).ready(function() {
+			chart1();
+			chart4();
+			chart11();
+			chart7();
+			
+	});//초기화 영역-------------------------------------------------------------
+  	</script>
+</head> 
+<body style='margin:0;height:100%'>
+<h1>&nbsp;&nbsp;Column Chart</h1>
+<hr>
+<div id="chart1" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:left;'></div>  
+<div id="chart1_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Gradient Color(Single column)</h2>
+	싱글 컬럼차트는 가장 심플한 컬럼차트의 종류이며 데이터 표현 방식이 직선적이며 단순하다. 이름에서 나타나듯이 싱글 컬럼 차트는 한개의 카테고리 안에서 다른 수치를 비교할 때 유용하게 쓰인다.
+</div>        
+
+
+
+<div id="chart4" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;'></div> 
+<div id="chart4_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Random Color(Single column)</h2>
+	싱글 컬럼차트는 가장 심플한 컬럼차트의 종류이며 데이터 표현 방식이 직선적이며 단순하다. 이름에서 나타나듯이 싱글 컬럼 차트는 한개의 카테고리 안에서 다른 수치를 비교할 때 유용하게 쓰인다.
+</div>  
+
+
+
+<div id="chart11" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:left;'></div>  
+<div id="chart11_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Stacked column</h2>
+	컬럼차트의 다양한 종류중에 한가지로 stacked 컬럼 차트는 싱글 컬럼 차트와 마찬가지로 같은 범주안의 값이나 비율을 비교할 때 사용되는데 stacked 컬럼 차트는 하나의 컬럼이 두개 이상의 다른 데이터를 포함하고 있으며 다른 색으로 구분하여 표현한다.
+</div>    
+
+<div id="chart7" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;'></div> 
+<div id="chart7_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Multi column</h2>
+	Multi 컬럼 차트는 컬럼 차트의 또 다른 변형인데, stacked 컬럼차트와 비슷한 목적으로 사용이 되기는 하나 한가지 다른점은 stacked 컬럼에서는 하나의 컬럼에 여러 다른 부분을 연결해서 표현하는 데에 비해 multi 컬럼차트에서는 개별 컬럼으로 그룹지어 표현한다는 점이다.
+</div>  
+
+
+</body>
+</html>
+

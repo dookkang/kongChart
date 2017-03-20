@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"  style='margin:0;height:100%'>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+ 	<title>ColumnChart</title>
+	<script src="js/mchart/jquery-1.11.1.min.js"></script>	
+	<script src="js/mchart/kongManager.js"></script>	
+  	<script src="js/mchart/kongSampleData.js"></script>  	  	
+  	<script src="js/mchart/kongChart.js"></script>		
+  	<script>
+
+	$(document).ready(function() {
+			chart3();
+			chart5();
+			chart13();
+			
+	});//초기화 영역-------------------------------------------------------------
+  	</script>
+</head> 
+<body style='margin:0;height:100%'>
+<h1>&nbsp;&nbsp;Line Chart</h1>
+<hr>
+<div id="chart3" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:left;'></div>  
+<div id="chart3_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Line</h2>
+	라인 차트는 특정한 간격을 두고 수집된 데이터를 x 좌표를 따라 표기 한 후에 표기된 포인트를 직선으로 연결하여 데이터의 변화를 한눈에 보기 쉽게 나타내는 것이다. 라인차트는 주로 시간차를 두고 변화하는 트렌드 등을 표현하는데 유용하게 쓰인다
+</div>        
+
+
+
+<div id="chart5" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;'></div> 
+<div id="chart5_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Multi Line</h2>
+	여러개의 시리즈를 한눈에 비교한다.
+</div>  
+
+
+
+<div id="chart13" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:left;'></div>  
+<div id="chart13_desc" style='box-sizing:border-box;border:0px solid olive;height:50%;width:50%;background-color:#FFF;float:right;padding:10px'>
+	<br>
+	<h2>Cutted Line</h2>
+	영역이 각각 다른 라인 시리즈들을 모아서 표현한다.
+</div>    
+
+
+</body>
+</html>
+
