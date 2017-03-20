@@ -13,24 +13,24 @@
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
 ?>
-<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#999999>
+<table width=80% border=0 cellpadding=2 cellspacing=1 bgcolor=#999999>
 	<tr>
 		<td height=20 align=center bgcolor=#999999>
 			<font color=white><B><?php print $row[title]?></B></font>
 		</td>
 	</tr>
-<table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
+<table width=80% border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
 	<tr>
-		<td width=50 height=20 align=center bgcolor=#EEEEEE>이름</td>
-		<td width=240 bgcolor=white><?php print $row[name];?></td>
-		<td width=50 height=20 align=center bgcolor=#EEEEEE>이메일</td>
-		<td width=240 bgcolor=white><?php print $row[email];?></td>
+		<td width=20% height=20 align=center bgcolor=#EEEEEE>이름</td>
+		<td width=50% bgcolor=white><?php print $row[name];?></td>
+		<td width=20% height=20 align=center bgcolor=#EEEEEE>이메일</td>
+		<td width=50% bgcolor=white><?php print $row[email];?></td>
 	</tr>
 	<tr>
-		<td width=50 height=20 align=center bgcolor=#EEEEEE>날짜</td>
-		<td width=240 bgcolor=white><?php print $row[wdate];?></td>
-		<td width=50 height=20 align=center bgcolor=#EEEEEE>조회수</td>
-		<td width=240 bgcolor=white><?php print $row[view];?></td>
+		<td width=20% height=20 align=center bgcolor=#EEEEEE>날짜</td>
+		<td width=50% bgcolor=white><?php print $row[wdate];?></td>
+		<td width=20% height=20 align=center bgcolor=#EEEEEE>조회수</td>
+		<td width=50% bgcolor=white><?php print $row[view];?></td>
 	</tr>
 	<tr>
 		<td colspan=4 bgcolor=white style='color:black'>
@@ -55,3 +55,11 @@
 </center>
 </body>
 </html>
+<?
+ 	$vvresult = mysql_query("UPDATE T_BD_CUS SET view=view+1 WHERE id='".$id."'",$conn);
+ 
+ 
+ 	mysql_close($conn);
+ 
+ 
+ ?>
