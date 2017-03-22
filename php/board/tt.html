@@ -1,0 +1,39 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<?php 
+	$filePath = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/";
+
+
+	// 변수 정리
+	$error 	= $_FILES['myfile']['error'];
+	$name 	= $_FILES['myfile']['name'];
+	$ext 	= array_pop(explode('.', $name));
+	$type 	= $_FILES['myfile']['type'];
+	$size 	= $_FILES['myfile']['size'];
+	$tmp_name 	= $_FILES['myfile']['tmp_name'];
+			 
+	// 파일 정보 출력
+	print "<h2>파일 정보</h2>
+	<ul>
+	<li>파일명: $name</li>
+	<li>확장자: $ext</li>
+	<li>파일형식:$type</li>
+	<li>파일크기: $size 바이트</li>
+    <li>tmp_name: $tmp_name</li>
+    <li>저장된파일: $filePath$name</li>
+	</ul>";
+
+
+	$uploadReesult = move_uploaded_file( $_FILES['myfile']['tmp_name'], $filePath.$name);
+
+	print "
+
+    <h2>결과</h2>
+	<ul>
+    <li>$uploadReesult</li>
+	</ul>
+
+    ";
+?>
+

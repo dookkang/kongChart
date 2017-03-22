@@ -15,13 +15,16 @@
 	$query = "SELECT pass FROM T_BD_CUS WHERE id='".$id."'";
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
+	$queryF = "SELECT pass FROM T_FILE_CUS WHERE id='".$id."'";	
+	$resultF = mysql_query($queryF, $conn);
 		
-	
 		$queryp = "DELETE FROM T_BD_CUS WHERE id='".$id."'";
+		$queryPF = "DELETE FROM T_FILE_CUS WHERE id='".$id."'";
 		
 		
 	if ($pass==$row[pass]){
 		$resultp = mysql_query($queryp, $conn);
+		$resultPF = mysql_query($queryPF, $conn);
 		print "삭제되었습니다.";
 	?>
 		<!--<a href="/php/board/list.html"> 리스트 </a>-->
