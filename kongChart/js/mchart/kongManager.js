@@ -409,6 +409,25 @@ $(window).resize(winresize);
 			option.series = series;
 			chart10.redraw(option);
 	};	
+	function chart10_1(){
+			var chartId = 'chart10_1';
+			var chart10_1 = createChart(chartId);			
+			var option = createOption(chart10_1,chartId);	
+
+			option.type= 'pie';
+			//option.chartTitle= '> 주요지적사항';
+			option.crossLineShow = false;
+			var series =
+				 [
+	 		 	    {s_name:'A상',s_data:data10_1
+			 	    ,s_color:'rgba(231,158,228,1)',s_lineWidth:'1',s_sizeMin:1,s_sizeDefault:5
+			 	    ,s_chartType:'line',s_shape:'rectangle',s_shapeColor:'rgba(100,128,0,1)'
+			 	    ,s_draw:true,s_min:-50,s_max:50
+			 	    ,s_unit:'건'}	 	   		 	     	    
+				 ];
+			option.series = series;
+			chart10_1.redraw(option);
+	};	
 	function chart11(){
 			var chartId = 'chart11';
 			var chart11 = createChart(chartId);			
@@ -531,6 +550,62 @@ $(window).resize(winresize);
 					option.series.push(aSeries);
 			}			
 			chart13.redraw(option);
+	};	
+	function chart13_1(){
+			var chartId = 'chart13_1';
+			var chart13_1 = createChart(chartId);			
+			var option = createOption(chart13_1,chartId);						
+				
+			option.xunit					= '년';//툴팁에 표시되는 X값의단위
+			option.unitLabel_Hori			= '[년도]';
+			option.unitLabel_Verti			= '[감가율]';
+			//option.chartTitle				= 'Sales Of Beer & Ice-cream';	
+			option.crossLineShow_hori		= false;//실시간선택라인 수평선 사용안함
+			var _xmin =0;
+			var _xmax =80;		
+			option.xrange_axis				= true;//x축이 범위형축	
+			option.xmin						= _xmin;
+			option.xmax						= _xmax;			
+			option.xrange_count             = (_xmax-_xmin)/5;	
+			option.legendPosition			= 'top';//'top','bottom'
+			option.valueShow				= true;//각 value포인터에 값도함께 표시하기
+			var _min =9999999999;
+			var _max =-9999999999;
+			option.y_mark_cnt					= 4;
+			
+			var seriesArr = data13_1;
+			for(var g=0;g<seriesArr.length; g++){
+					var data = chartUtil.formatData_profile2(seriesArr[g]);
+					if(_max < data['maxy']){
+						_max = data['maxy'];
+					}
+					if(_min > data['miny']){
+						_min = data['miny'];
+					}					
+					var _s_name = '';
+					if(data['reArr'][0][3] != null){
+						_s_name = data['reArr'][0][3];
+					}
+					var aSeries 	= createSeries(_s_name,'line',data);
+					aSeries.s_unit	='개';//툴팁에 표시될 Y값의단위
+					aSeries.s_sizeDefault = lineDeeps[g];//점의 크기
+					aSeries.s_shape='circle';//점의 모양
+					aSeries.s_color='rgba('+lineColours[g]['red']+','+lineColours[g]['green']+','+lineColours[g]['blue']+',1)';//시리즈의 색상
+					aSeries.s_lineType=lineStyles[g];
+					aSeries.s_lineWidth=lineDeeps[g];
+					aSeries.s_shapeColor=aSeries.s_color;
+					aSeries.s_lineLinkable=true;
+					aSeries.s_min=_min;
+					aSeries.s_max=_max;
+					aSeries.s_y_mark_cnt=option.y_mark_cnt;
+
+					option.series.push(aSeries);
+			}
+			for(var g=0;g<option.series.length; g++){
+					option.series[g].s_min = _min;
+					option.series[g].s_max = _max;
+			}
+			chart13_1.redraw(option);
 	};	
 	function chart14(){
 			var chartId = 'chart14';

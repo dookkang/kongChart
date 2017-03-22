@@ -85,7 +85,8 @@ HChart = function(_container) {
 		tooltipTextColor:'rgba(55,101,114,1)',
 		bottom_title_align:'right',
 		minmaxset:false,
-		toFixedY:2
+		toFixedY:2,
+		valueShowPosition:'bottom'
 	};
 	this.option = {};
 	
@@ -1636,9 +1637,18 @@ HChart.prototype.drawSeries = function() {
 						lastExistY = py;
 						if(this.o()['valueShow']){
 							var px_start = px- this.mainCanvasBufferCtx.measureText(y).width/2;
+							var vsX;
+							var vsY;
+							if(this.o()['valueShowPosition'] == 'top'){
+								vsX = px_start;
+								vsY = py-s_sizeDefault;								
+							}else{
+								vsX = px_start;
+								vsY = py+12;		
+							}							
 							this.mainCanvasBufferCtx.fillText(y,
-									px_start,
-									py-s_sizeDefault
+									vsX,
+									vsY
 									);	
 						}						
 							var rectWidth = markGep-(markGep/s_data.length);
@@ -3294,47 +3304,47 @@ HChart.prototype.drawSeriesPie = function(_cutValue) {
 							cutValue = _cutValue;
 						}
 						
-
-						
+						var ox = orix;
+						var oy = oriy;
 						//3시가 0도
+						
 						if(nowDgree >= 0 && nowDgree <= 90){
 							if(cutValue == s_data[j][1]){
-								orix += cutPieGep*Math.sin(radion);
-								oriy -= cutPieGep*Math.cos(radion);
+								ox += cutPieGep*Math.abs(Math.cos(radion));
+								oy -= cutPieGep*Math.abs(Math.sin(radion));
 							}	
-
 							var x3 = x2+tipLineW;						
-							this.drawLine(colorText,1,orix+cutPieGep*Math.sin(radion),oriy-cutPieGep*Math.cos(radion),x2,y2);	
+							this.drawLine(colorText,1,ox+cutPieGep*Math.abs(Math.cos(radion)),oy-cutPieGep*Math.abs(Math.sin(radion)),x2,y2);	
 							this.drawLine(colorText,1,x2,y2,x3,y2);	
 							this.mainCanvasBufferCtx.fillStyle = colorText;
 							this.mainCanvasBufferCtx.fillText(itemText,x3,y2);								
 						}else if(nowDgree >= 90 && nowDgree <= 180){
 							if(cutValue == s_data[j][1]){
-								orix -= cutPieGep*Math.abs(Math.cos(radion));
-								oriy -= cutPieGep*Math.abs(Math.sin(radion));
+								ox -= cutPieGep*Math.abs(Math.cos(radion));
+								oy -= cutPieGep*Math.abs(Math.sin(radion));
 							}		
 							var x3 = x2-tipLineW;
-							this.drawLine(colorText,1,orix-cutPieGep*Math.abs(Math.cos(radion)),oriy-cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
+							this.drawLine(colorText,1,ox-cutPieGep*Math.abs(Math.cos(radion)),oy-cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
 							this.drawLine(colorText,1,x3,y2,x2,y2);	
 							this.mainCanvasBufferCtx.fillStyle = colorText;
 							this.mainCanvasBufferCtx.fillText(itemText,x3-this.mainCanvasBufferCtx.measureText(itemText).width,y2);								
-						}else if(nowDgree >= 180 && nowDgree <= 270){
+						}else if(nowDgree >= 180 && nowDgree <= 270){						
 							if(cutValue == s_data[j][1]){
-								orix -= cutPieGep*Math.abs(Math.cos(radion));
-								oriy += cutPieGep*Math.abs(Math.sin(radion));
+								ox -= cutPieGep*Math.abs(Math.cos(radion));
+								oy += cutPieGep*Math.abs(Math.sin(radion));
 							}								
 							var x3 = x2-tipLineW;
-							this.drawLine(colorText,1,orix-cutPieGep*Math.abs(Math.cos(radion)),oriy+cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
+							this.drawLine(colorText,1,ox-cutPieGep*Math.abs(Math.cos(radion)),oy+cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
 							this.drawLine(colorText,1,x3,y2,x2,y2);
 							this.mainCanvasBufferCtx.fillStyle = colorText;
 							this.mainCanvasBufferCtx.fillText(itemText,x3-this.mainCanvasBufferCtx.measureText(itemText).width,y2);							
-						}else {
+						}else {						
 							if(cutValue == s_data[j][1]){
-								orix += cutPieGep*Math.abs(Math.cos(radion));
-								oriy += cutPieGep*Math.abs(Math.sin(radion));
+								ox += cutPieGep*Math.abs(Math.cos(radion));
+								oy += cutPieGep*Math.abs(Math.sin(radion));
 							}								
 							var x3 = x2+tipLineW;
-							this.drawLine(colorText,1,orix+cutPieGep*Math.abs(Math.cos(radion)),oriy+cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
+							this.drawLine(colorText,1,ox+cutPieGep*Math.abs(Math.cos(radion)),oy+cutPieGep*Math.abs(Math.sin(radion)),x2,y2);				
 							this.drawLine(colorText,1,x2,y2,x3,y2);
 							this.mainCanvasBufferCtx.fillStyle = colorText;
 							this.mainCanvasBufferCtx.fillText(itemText,x3,y2);								
@@ -3353,10 +3363,11 @@ HChart.prototype.drawSeriesPie = function(_cutValue) {
 							colorText = this.o()['colorList'][j];
 						}
 							this.drawArc2(
+									s_color,
 									colorText,
 									1,
-									orix,
-									oriy,
+									ox,
+									oy,
 									circleR,
 									startR,
 									startR+targetRadian
@@ -3512,7 +3523,7 @@ HChart.prototype.drawArc = function(_color,_lineWidth,_x1,_y1,_r,_startRadian,_e
 };
 
 
-HChart.prototype.drawArc2 = function(_color,_lineWidth,_x1,_y1,_r,_startRadian,_endRadian) {
+HChart.prototype.drawArc2 = function(_lineColor,_color,_lineWidth,_x1,_y1,_r,_startRadian,_endRadian) {
 	var startRadian;
 	var endRadian;
 	if(_startRadian == null){
@@ -3525,20 +3536,22 @@ HChart.prototype.drawArc2 = function(_color,_lineWidth,_x1,_y1,_r,_startRadian,_
 	}else{
 		endRadian = _endRadian;		
 	}	
+	
 	this.mainCanvasBufferCtx.shadowColor = 'rgba(158,158,158,1)';
 	this.mainCanvasBufferCtx.shadowOffsetX = 3;
 	this.mainCanvasBufferCtx.shadowOffsetY = 3;
 	this.mainCanvasBufferCtx.shadowBlur = 0.5;
 	
 	
-	this.mainCanvasBufferCtx.strokeStyle = _color;
+	this.mainCanvasBufferCtx.strokeStyle = _lineColor;
 	this.mainCanvasBufferCtx.fillStyle = _color;
 	this.mainCanvasBufferCtx.beginPath();
 	this.mainCanvasBufferCtx.moveTo(_x1, _y1);
 	this.mainCanvasBufferCtx.arc(_x1, _y1,_r, startRadian, endRadian, true);
 	this.mainCanvasBufferCtx.closePath();
-	//this.mainCanvasBufferCtx.stroke();
+	this.mainCanvasBufferCtx.stroke();
 	this.mainCanvasBufferCtx.fill();
+	
 	this.mainCanvasBufferCtx.shadowColor = 'red';
 	this.mainCanvasBufferCtx.shadowOffsetX = 0;
 	this.mainCanvasBufferCtx.shadowOffsetY = 0;
