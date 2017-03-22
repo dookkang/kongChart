@@ -345,7 +345,9 @@ $(window).resize(winresize);
 			option.chartTitleAlign			= 'left';
 			
 
-			var aSeries = createSeries('any sereis','bar',data8);			
+			var aSeries = createSeries('any sereis','bar',data8);
+			var colors = ['182,192,118','118,192,187','186,119,191','193,140,117','215,211,96','211,99,130'];			
+			aSeries.s_colors = colors;
 			option.series.push(aSeries);
 			
 			chart8.redraw(option);
