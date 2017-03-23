@@ -1,0 +1,25 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<?
+$id = "T_BD_CUS_58d35264cff9a";
+$queryF = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
+$resultF = mysql_query($queryF, $conn);
+$row = mysql_fetch_array($resultF);
+
+//$filename = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/거실.jpg";
+$filename = $row[path].$row[name]; 
+print $filename."<br>";
+
+if ( file_exists('$filename') ) { 
+    if ( is_writable($filename)==1 ) { 
+        $result =  unlink($filename); 
+		if($result == 1){
+			echo '정상삭제!'; 
+		}
+    } else { 
+        echo '파일에 대한 쓰기(삭제) 권한 없음.'; 
+    } 
+} else { 
+    echo '파일이 아니거나 없음.'; 
+}
+?>

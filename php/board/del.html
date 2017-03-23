@@ -1,9 +1,9 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
-<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+
 <html>
 <head>
 <title>member</title>
-<meta http-equiv="Content-type" content="text/html; charset=UTF-8">	
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 </head>
 <body>
 <?php
@@ -25,9 +25,10 @@
 	if ($pass==$row[pass]){
 		$resultp = mysql_query($queryp, $conn);
 		$resultPF = mysql_query($queryPF, $conn);
-		print "ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§.";
+		print "ªË¡¶µ«æ˙Ω¿¥œ¥Ÿ.";
 	?>
-		<!--<a href="/php/board/list.html"> Î¶¨Ïä§Ìä∏ </a>-->
+	<?>
+		<!--<a href="/php/board/list.html"> ∏ÆΩ∫∆Æ </a>-->
 		<script>
 		location.href = "/php/board/list.html";
 		</script>
@@ -37,9 +38,9 @@
 		?>
 	<center>
 		<br><br><br><br>
-		<?print "ÎπÑÎ∞ÄÎ≤àÌò∏Í∞Ä ÌãÄÎ¶ΩÎãàÎã§";?>
+		<?print "∫Òπ–π¯»£∞° ∆≤∏≥¥œ¥Ÿ";?>
 		<br>
-		<a href="/php/board/list.html"> [Î™© Î°ù] </a>
+		<a href="/php/board/list.html"> [∏Ò ∑œ] </a>
 	</center>
 	<?php
 	exit;
