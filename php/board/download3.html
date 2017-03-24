@@ -1,13 +1,12 @@
-<?
-
-
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php
 	$id = $_GET[id];
-	print $id;
 	$queryF = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
 	$resultF = mysql_query($queryF, $conn);
 	$row = mysql_fetch_array($resultF);
-?>
-<?php
+	//print "<br>";
+	//$filename = $row[path].$row[name]; 
+	//print $filename."<br>";
 
 header("Content-Type: text/html; charset=UTF-8");
 function mb_basename($path) { return end(explode('/',$path)); } 
@@ -22,7 +21,7 @@ function is_ie() {
 <?php
 
 $filepath = $row[path].$row[name];
-print $filepath;
+//$filepath = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/거실.jpg";
 $filesize = filesize($filepath);
 $filename = mb_basename($filepath);
 if( is_ie() ) $filename = utf2euc($filename);
@@ -36,5 +35,4 @@ header("Content-Length: $filesize");
 
 readfile($filepath);
 exit();
-mysql_close($conn);
 ?>

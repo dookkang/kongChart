@@ -12,6 +12,9 @@
 	$query = "SELECT * FROM T_BD_CUS WHERE id='".$id."'" ;
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
+	$fquery = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'" ;
+	$fresult = mysql_query($fquery, $conn);
+	$frow = mysql_fetch_array($fresult);
 ?>
 <table width=80% border=0 cellpadding=2 cellspacing=1 bgcolor=#999999>
 	<tr>
@@ -26,12 +29,17 @@
 		<td width=20% height=20 align=center bgcolor=#EEEEEE>이메일</td>
 		<td width=50% bgcolor=white><?php print $row[email];?></td>
 	</tr>
+	
 	<tr>
 		<td width=20% height=20 align=center bgcolor=#EEEEEE>날짜</td>
 		<td width=50% bgcolor=white><?php print $row[wdate];?></td>
 		<td width=20% height=20 align=center bgcolor=#EEEEEE>조회수</td>
 		<td width=50% bgcolor=white><?php print $row[view];?></td>
 	</tr>
+	<tr>
+		<td width=20% height=20 align=center bgcolor=#EEEEEE>파일
+		<td width=50% bgcolor=white><a href="/php/board/download3.html?id=<?php print $id;?>"><?php print $frow[name];?></a>
+	</td>
 	<tr>
 		<td colspan=4 bgcolor=white style='color:black'>
 		<pre><?php print $row[content];?></pre>
