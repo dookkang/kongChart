@@ -23,12 +23,31 @@
 		
 		
 	if ($pass==$row[pass]){
+
+			$queryFD = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
+			$resultFD = mysql_query($queryFD, $conn);
+			$rowFD = mysql_fetch_array($resultFD);
+			print $queryFD;
+			//$filename = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/Í±∞Ïã§.jpg";
+			$filename = $rowFD[path].$rowFD[name]; 
+			print $filename."<br>";
+
+			if ( file_exists($filename) ) { 
+   			 if ( is_writable($filename)==1 ) { 
+       			 $result =  unlink($filename); 
+					if($result == 1){
+					}
+    			} else { 
+       			 echo 'ÌååÏùºÏóê ÎåÄÌïú Ïì∞Í∏∞(ÏÇ≠Ï†ú) Í∂åÌïú ÏóÜÏùå.'; 
+   			 } 
+			} else { 
+   			 echo 'ÌååÏùºÏù¥ ÏïÑÎãàÍ±∞ÎÇò ÏóÜÏùå.'; 
+			}
 		$resultp = mysql_query($queryp, $conn);
 		$resultPF = mysql_query($queryPF, $conn);
-		print "ªË¡¶µ«æ˙Ω¿¥œ¥Ÿ.";
-	?>
-	<?>
-		<!--<a href="/php/board/list.html"> ∏ÆΩ∫∆Æ </a>-->
+
+			?>
+		<!-- <a href="/php/board/list.html"> Î¶¨Ïä§Ìä∏ </a> -->
 		<script>
 		location.href = "/php/board/list.html";
 		</script>
@@ -38,9 +57,9 @@
 		?>
 	<center>
 		<br><br><br><br>
-		<?print "∫Òπ–π¯»£∞° ∆≤∏≥¥œ¥Ÿ";?>
+		<?print "ÎπÑÎ∞ÄÎ≤àÌò∏Í∞Ä ÌãÄÎ¶ΩÎãàÎã§";?>
 		<br>
-		<a href="/php/board/list.html"> [∏Ò ∑œ] </a>
+		<a href="/php/board/list.html"> [Î™© Î°ù] </a>
 	</center>
 	<?php
 	exit;

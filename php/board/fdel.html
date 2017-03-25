@@ -1,16 +1,16 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <?
-$id = "T_BD_CUS_58d35264cff9a";
+$id = "T_BD_CUS_58d35180f39dd";
 $queryF = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
 $resultF = mysql_query($queryF, $conn);
 $row = mysql_fetch_array($resultF);
-
+print $queryF;
 //$filename = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/거실.jpg";
 $filename = $row[path].$row[name]; 
 print $filename."<br>";
 
-if ( file_exists('$filename') ) { 
+if ( file_exists($filename) ) { 
     if ( is_writable($filename)==1 ) { 
         $result =  unlink($filename); 
 		if($result == 1){

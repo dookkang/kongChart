@@ -138,3 +138,47 @@
 		document.fm.method = 'post';
 		document.fm.submit();
 	};
+	function wri(){
+		try{
+			//아이디필수체크
+			if(fm.title.value == ''){
+				alert("제목을 입력하십시요");
+				alert(fm.title);
+				fm.title.focus();
+				return;
+			}
+			if(fm.content.value == ''){
+				alert("내용을 입력하십시요");
+				fm.content.focus();
+				return;	
+			}
+			document.fm.action = "/php/board/insert.html";
+			document.fm.target = '_self';
+			document.fm.method = 'post';
+			document.fm.submit();			
+		}catch(e){
+			alert(e);
+		}
+	};
+	function edi(){
+		try{
+			//아이디필수체크
+			if(fm.title.value == ''){
+				alert("제목을 입력하십시요");
+				alert(fm.title);
+				fm.title.focus();
+				return;
+			}
+			if(fm.content.value == ''){
+				alert("내용을 입력하십시요");
+				fm.content.focus();
+				return;	
+			}
+			document.fm.action = "/php/board/update.html";
+			document.fm.target = '_self';
+			document.fm.method = 'post';
+			document.fm.submit();			
+		}catch(e){
+			alert(e);
+		}
+	};
