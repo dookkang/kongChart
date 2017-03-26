@@ -141,9 +141,13 @@
 	function wri(){
 		try{
 			//아이디필수체크
+			if(fm.pass.value == ''){
+				alert("비밀번호를 입력하십시요");
+				fm.pass.focus();
+				return;
+			}
 			if(fm.title.value == ''){
 				alert("제목을 입력하십시요");
-				alert(fm.title);
 				fm.title.focus();
 				return;
 			}
@@ -165,9 +169,13 @@
 	function edi(){
 		try{
 			//아이디필수체크
+			if(fm.pass.value == ''){
+				alert("비밀번호를 입력하십시요");
+				fm.pass.focus();
+				return;
+			}
 			if(fm.title.value == ''){
 				alert("제목을 입력하십시요");
-				alert(fm.title);
 				fm.title.focus();
 				return;
 			}

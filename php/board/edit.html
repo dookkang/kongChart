@@ -29,39 +29,39 @@
 		<td bgcolor=white>
 		<table border=0 width=100% align=center>
 			<tr>
-				<td width=50 align=center >이름</td>
+				<td width=80 align=center >이름</td>
 				<td align=left >
 					<Input type=hidden name="id" value="<?php print $id;?>">
 					<Input readonly type=text name="name" size=20 maxlength=30% value="<?php print $row[name];?>">
 				</td>
 			</tr>
 			<tr>
-				<td width=50 align=center >이메일</td>
+				<td width=80 align=center >이메일</td>
 				<td align=left >
 					<Input type=text name="email" size=20 maxlength=50 value="<?php print $row[email];?>">
 				</td>
 			</tr>
 			<tr>
-				<td width=50 align=center >비밀번호</td>
+				<td width=80 align=center >비밀번호</td>
 				<td align=left >
 					<Input type=password name="pass" size=8 maxlength=12>
 					(비밀번호가 맞아야 수정가능)
 				</td>
 			</tr>
 			<tr>
-				<td width=50 align=center >제 목</td>
+				<td width=80 align=center >제 목</td>
 				<td align=left >
 					<Input type=text name="title" size=60 maxlength=70 style="width:95%;" value="<?php print $row[title];?>">
 				</td>
 			</tr>
 			<tr>
-				<td width=50 align=center bgcolor="#FFFFFF">파일
+				<td width=80 align=center bgcolor="#FFFFFF">파일
 				<td align=left>
 					<input readonly type=text name="myfile" size="60" value="<?php print $frow[name];?>">
 			</td>
 		</tr>
 			<tr>
-				<td width=50 align=center >내용</td>
+				<td width=80 align=center >내용</td>
 				<td align=left >
 					<TEXTAREA id="EText" name="content" rows='20' cols='80' style="width:95%;" class="ckeditor"><?php print $row[content];?></TEXTAREA>	
 				</td>
