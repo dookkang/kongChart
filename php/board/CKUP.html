@@ -1,0 +1,56 @@
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<?php 
+	$filePath = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/";
+
+
+	// 변수 정리
+	//$error 	= $_FILES['myfile']['error'];
+	$name 	= $_FILES["upload"]["name"];
+	$ext 	= array_pop(explode('.', $name));
+	//$type 	= $_FILES['myfile']['type'];
+	$size 	= $_FILES["upload"]["size"];
+	//$tmp_name 	= $_FILES['myfile']['tmp_name'];
+			 
+	
+	/*// 파일 정보 출력
+	print "<h2>파일 정보</h2>
+	<ul>
+	<li>파일명: $name</li>
+	<li>확장자: $ext</li>
+	<li>파일형식:$type</li>
+	<li>파일크기: $size 바이트</li>
+    <li>tmp_name: $tmp_name</li>
+    <li>저장된파일: $filePath$name</li>
+	</ul>";*/
+	if ($size > 0 ){
+	    // 현재시간 추출
+  		$date_filedir    = date("YmdHis");
+ 
+		$ext 	= array_pop(explode('.', $name));
+		$ext = strtolower($ext);
+		$savefilename = $date_filedir."_".str_replace(" ", "_", $name);
+		$uploadpath  = $_SERVER['DOCUMENT_ROOT']."/php/board/file";
+    	$uploadsrc = $_SERVER['HTTP_HOST']."/php/board/file/";
+		$http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
+	
+			//php 파일업로드하는 부분
+    	if($ext=="jpg" or $ext=="gif" or $ext =="png"){
+        	if(move_uploaded_file($_FILES['upload']['tmp_name'],$uploadpath."/".iconv("UTF-8","EUC-KR",$savefilename))){
+            	$uploadfile = $savefilename;
+            	echo "<script type='text/javascript'>alert('업로드성공: ".$savefilename."');</script>;";
+        	}
+    	}else{
+        	echo "<script type='text/javascript'>alert('jpg,gif,png파일만 업로드가능합니다.');</script>;";
+    	}
+
+	}else{
+    	exit;
+ 
+	}
+
+	echo "<script type='text/javascript'> window.parent.CKEDITOR.tools.callFunction({$_GET['CKEditorFuncNum']}, '".$http.$uploadsrc."$uploadfile');</script>;";
+ 
+?>
+

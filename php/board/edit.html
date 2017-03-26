@@ -4,6 +4,7 @@
 <title>수정</title>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <script type="text/javascript" src="/js/member.js"></script>
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 </head>
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
@@ -62,7 +63,7 @@
 			<tr>
 				<td width=50 align=center >내용</td>
 				<td align=left >
-					<TEXTAREA name="content" rows='20' cols='80' style="width:95%;"><?php print $row[content];?></TEXTAREA>	
+					<TEXTAREA id="EText" name="content" rows='20' cols='80' style="width:95%;" class="ckeditor"><?php print $row[content];?></TEXTAREA>	
 				</td>
 			</tr>
 			<tr>

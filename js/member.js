@@ -147,6 +147,8 @@
 				fm.title.focus();
 				return;
 			}
+			var a = CKEDITOR.instances.WText.getData();
+			fm.content.value = a;
 			if(fm.content.value == ''){
 				alert("내용을 입력하십시요");
 				fm.content.focus();
@@ -169,6 +171,8 @@
 				fm.title.focus();
 				return;
 			}
+			var a = CKEDITOR.instances.EText.getData();
+			fm.content.value = a;
 			if(fm.content.value == ''){
 				alert("내용을 입력하십시요");
 				fm.content.focus();
