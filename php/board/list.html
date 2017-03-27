@@ -69,14 +69,19 @@
 	$query = "select * from T_BD_CUS order by wdate desc limit $from,$list ";
 	$result = mysql_query($query, $conn);
 
-	$Aquery = "select * from T_BD_CUS order by wdate desc limit 0,188 ";
-	$Aresult = mysql_query($Aquery, $conn);
-	$Acount = mysql_num_rows($Aresult);
+	print $block;
 	
+	$Acount = 0;
+	$Acountquery = "SELECT count(*) as 'Acount' FROM `T_BD_CUS` WHERE 1";
+	$Acountresult = mysql_query($Acountquery, $conn);
+	while($Acountrow = mysql_fetch_array($Acountresult))
+	{
+		$Acount = $Acountrow[Acount];
+	}
+
 	$count = mysql_num_rows($result);
 	$num = $count;
 	$total_page = ceil( $Acount / $list );
-	print $Acount;
 	if ($b_end_page > $total_page){ 
 
 	$b_end_page = $total_page;
@@ -129,7 +134,7 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 
 }else{ //block이 1보다 크다면?>
 
-	<font size=2><a href="/php/board/list.html?pageNum=<?=$b_start_page-1?>&list=<?=$list?>">이전</a></font>
+	<font size=2><a href="/php/board/list.html?pageNum=<?=$b_start_page-1?>&list=<?=$list?>&cc=<?=$b_start_page-10?>">이전</a></font>
 
 <?//이전 링크를 보여줍니다.
 
@@ -143,11 +148,15 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 	if(is_null($cc)){
 		$cc = 1;
 	};
-	for($cc= 1; $cc <=$b_end_page ; $cc++){
+	$cc = 1+((10*$block)-10);
+	for(; $cc <=$b_end_page ; $cc++){
 ?>
 	<a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a>
 <?php	
 	};
+
+
+
 
 $total_block = ceil($total_page/$b_pageNum_list);
 
@@ -157,7 +166,7 @@ if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
 
 }else{ //그게 아니라면?>
 
-        <font size=2><a href="/php/board/list.html?pageNum=<?=$b_end_page+1?>&list=<?=$list?>">다음</a></font>
+        <font size=2><a href="/php/board/list.html?pageNum=<?=$b_end_page+1?>&list=<?=$list?>&cc=<?=$cc?>">다음</a></font>
 
 <?//다음 링크버튼을 걸어 보여준다.
 
