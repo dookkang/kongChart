@@ -52,22 +52,38 @@
 
 ?>
 
+
 	
 <?php
 	$pageNum = $_REQUEST[pageNum];
 	if(is_null($pageNum)){
 		$pageNum = 1;
 	};
+	$list = 15;
+	$b_pageNum_list = 10;
+	$block = ceil($pageNum/$b_pageNum_list);
+	$b_start_page = ( ($block - 1) * $b_pageNum_list ) + 1; 
+	$b_end_page = $b_start_page + $b_pageNum_list - 1; 
 
-
-	$from = ($pageNum-1)*15;
-	$query = "select * from T_BD_CUS order by wdate desc limit $from,15 ";
+	$from = ($pageNum-1)*$list;
+	$query = "select * from T_BD_CUS order by wdate desc limit $from,$list ";
 	$result = mysql_query($query, $conn);
+
+	$Aquery = "select * from T_BD_CUS order by wdate desc limit 0,188 ";
+	$Aresult = mysql_query($Aquery, $conn);
+	$Acount = mysql_num_rows($Aresult);
+	
 	$count = mysql_num_rows($result);
 	$num = $count;
+	$total_page = ceil( $Acount / $list );
+	print $Acount;
+	if ($b_end_page > $total_page){ 
+
+	$b_end_page = $total_page;
+	};
 
 	$n = 0;
-	$nnn = $cnt-(($pageNum-1)*15);
+	$nnn = $cnt-(($pageNum-1)*$list);
 	while($row = mysql_fetch_array($result))
 	{
 	
@@ -107,11 +123,46 @@
 ?>
 <br>
 <?php
-	for($count = 1 ; $count <=$cr ; $count++){
+if($block <=1){  //block이 1보다 작거나 같으면 ?>
+
+	<font> </font> <?//더 이상 거꾸로 갈 수 없으므로 아무 표시도 하지 않습니다.
+
+}else{ //block이 1보다 크다면?>
+
+	<font size=2><a href="/php/board/list.html?pageNum=<?=$b_start_page-1?>&list=<?=$list?>">이전</a></font>
+
+<?//이전 링크를 보여줍니다.
+
+	}
+
+
+
+
+
+	$cc = $_REQUEST[cc];
+	if(is_null($cc)){
+		$cc = 1;
+	};
+	for($cc= 1; $cc <=$b_end_page ; $cc++){
 ?>
-	<a href="/php/board/list.html?pageNum=<?php print $count;?>"><?php print $count.'&nbsp;&nbsp;';?></a>
+	<a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a>
 <?php	
 	};
+
+$total_block = ceil($total_page/$b_pageNum_list);
+
+if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
+
+	<font> </font>  <?// 맨 마지막 블럭이므로 다음링크버튼이 필요없어서 보여주지 않는다.
+
+}else{ //그게 아니라면?>
+
+        <font size=2><a href="/php/board/list.html?pageNum=<?=$b_end_page+1?>&list=<?=$list?>">다음</a></font>
+
+<?//다음 링크버튼을 걸어 보여준다.
+
+}
+
 ?>
 
 

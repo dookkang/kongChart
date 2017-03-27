@@ -11,7 +11,7 @@
 		$name = $_REQUEST[name];
 		$email = $_REQUEST[email];
 		$pass = $_REQUEST[pass];
-		$title = $_REQUEST[title];
+		$title = strip_tags ( $_REQUEST[title] );
 		$content = $_REQUEST[content];
 		
 		//print "id--->".$id;

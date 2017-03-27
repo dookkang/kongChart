@@ -7,7 +7,7 @@
 	$name = $_POST[name];
 	$email = $_POST[email];
 	$pass = $_POST[pass];
-	$title = $_POST[title];
+	$title = strip_tags ( $_POST[title] );
 	$content = $_POST[content];
 
 	$query = "INSERT INTO T_BD_CUS
