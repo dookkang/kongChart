@@ -69,8 +69,6 @@
 	$query = "select * from T_BD_CUS order by wdate desc limit $from,$list ";
 	$result = mysql_query($query, $conn);
 
-	print $block;
-	
 	$Acount = 0;
 	$Acountquery = "SELECT count(*) as 'Acount' FROM `T_BD_CUS` WHERE 1";
 	$Acountresult = mysql_query($Acountquery, $conn);
