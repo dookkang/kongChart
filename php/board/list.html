@@ -59,7 +59,7 @@
 	if(is_null($pageNum)){
 		$pageNum = 1;
 	};
-	$list = 15;
+	$list = 12;
 	$b_pageNum_list = 10;
 	$block = ceil($pageNum/$b_pageNum_list);
 	$b_start_page = ( ($block - 1) * $b_pageNum_list ) + 1; 
@@ -96,7 +96,7 @@
 		<?php print $nnn--;?>
 		</td>
 		<td height=20 bgcolor=white align=left>
-		<a href="/php/board/read.html?id=<?php print $row[id];?>"><?php print $row[title];?></a>
+		<a href="/php/board/read.html?id=<?php print $row[id];?>&cltId=<?php print $cltId;?>"><?php print $row[title];?></a>
 		</td>
 		<td height=20 bgcolor=white align=center>
 		<?php print $row[name];?>
@@ -148,8 +148,22 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 	};
 	$cc = 1+((10*$block)-10);
 	for(; $cc <=$b_end_page ; $cc++){
+		if($pageNum == $cc) //pageNum 와 j 가 같으면 현재 페이지 이므로
+
+	{?>
+
+		<font size=3 color=black><?=$cc?></font><?//링크걸지 않고 그냥 현재페이지만 출력
+
+	}else{ //서로 다르다면?>
+
+              <a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a>
+
+               <?// 현재 페이지를 제외한 나머지 페이지번호를 링크를 달아 출력하기
+
+	}
+
 ?>
-	<a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a>
+	<!-- <a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a> -->
 <?php	
 	};
 

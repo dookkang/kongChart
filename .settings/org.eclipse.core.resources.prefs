@@ -12,5 +12,7 @@ encoding//php/board/read.html=UTF-8
 encoding//php/board/tt.html=UTF-8
 encoding//php/board/write.html=UTF-8
 encoding//php/layout/top.html=UTF-8
+encoding//php/member/login.html=UTF-8
 encoding//php/member/memberJoin.html=UTF-8
+encoding//php/member/memberUpdate.html=UTF-8
 encoding/<project>=UTF-8

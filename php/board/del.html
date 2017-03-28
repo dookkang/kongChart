@@ -7,7 +7,8 @@
 </head>
 <body>
 <?php
-    	$id = $_GET[id];
+    	$ctrl = $_REQUEST[ctrl];
+		$id = $_GET[id];
 		$pass = $_REQUEST[pass];
 		
 		//print "id--->".$id;
@@ -22,15 +23,41 @@
 		$queryPF = "DELETE FROM T_FILE_CUS WHERE id='".$id."'";
 		
 		
-	if ($pass==$row[pass]){
+	if ($ctrl==1){
+			$queryFD = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
+			$resultFD = mysql_query($queryFD, $conn);
+			$rowFD = mysql_fetch_array($resultFD);
+			//$filename = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/거실.jpg";
+			$filename = $rowFD[path].$rowFD[name]; 
+
+			if ( file_exists($filename) ) { 
+   			 if ( is_writable($filename)==1 ) { 
+       			 $result =  unlink($filename); 
+					if($result == 1){
+					}
+    			} else { 
+       			 echo '파일에 대한 쓰기(삭제) 권한 없음.'; 
+   			 } 
+			} else { 
+   			 echo '파일이 아니거나 없음.'; 
+			}
+			$resultp = mysql_query($queryp, $conn);
+			$resultPF = mysql_query($queryPF, $conn);
+				?>
+			<!-- <a href="/php/board/list.html"> 리스트 </a> -->
+			<script>
+			location.href = "/php/board/list.html";
+			</script>
+			<?php
+	}else{
+
+		if ($pass==$row[pass]){
 
 			$queryFD = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
 			$resultFD = mysql_query($queryFD, $conn);
 			$rowFD = mysql_fetch_array($resultFD);
-			print $queryFD;
 			//$filename = $_SERVER["DOCUMENT_ROOT"]."/php/board/file/거실.jpg";
 			$filename = $rowFD[path].$rowFD[name]; 
-			print $filename."<br>";
 
 			if ( file_exists($filename) ) { 
    			 if ( is_writable($filename)==1 ) { 
@@ -45,24 +72,25 @@
 			}
 		$resultp = mysql_query($queryp, $conn);
 		$resultPF = mysql_query($queryPF, $conn);
-
+	
 			?>
 		<!-- <a href="/php/board/list.html"> 리스트 </a> -->
 		<script>
 		location.href = "/php/board/list.html";
 		</script>
-	<?php
-	}
-	else {
-		?>
-	<center>
-		<br><br><br><br>
-		<?print "비밀번호가 틀립니다";?>
-		<br>
-		<a href="/php/board/list.html"> [목 록] </a>
-	</center>
-	<?php
-	exit;
+		<?php
+		}
+		else {
+			?>
+		<center>
+			<br><br><br><br>
+			<?print "비밀번호가 틀립니다";?>
+			<br>
+			<a href="/php/board/list.html"> [목 록] </a>
+		</center>
+		<?php
+		exit;
+		};
 	};
 	mysql_close($conn);
 ?>

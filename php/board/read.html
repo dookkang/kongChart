@@ -8,7 +8,9 @@
 <center>
 <br>
 <?php
+	$cltId = $_GET[cltId];
 	$id = $_GET[id];
+	$name = $_GET[name];
 	$query = "SELECT * FROM T_BD_CUS WHERE id='".$id."'" ;
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
@@ -52,7 +54,7 @@
 					[글쓰기]</font></a>
 					<a href="/php/board/edit.html?id=<?php print $id;?>" ><font color=black>
 					[수정]</font></a>
-					<a href="/php/board/predel.html?id=<?php print $id;?>" ><font color=black>
+					<a href="/php/board/predel.html?id=<?php print $id;?>&cltId=<?php print $cltId;?>" ><font color=black>
 					[삭제]</font></a>
 				</td>
 			</tr>

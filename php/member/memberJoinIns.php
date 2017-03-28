@@ -15,8 +15,8 @@
 </head>
 <body>
 <?php
-	$sql = "insert into membership ( name, id, pass, nick, addr, birth )";
-	$sql = $sql. "values('$name','$cltId','$pass','$nick','$addr','$birth')";
+	$sql = "insert into membership ( name, id, pass, nick, addr, birth, ctrl)";
+	$sql = $sql. "values('$name','$cltId','$pass','$nick','$addr','$birth','0')";
 	if(mysql_query($sql)){
 ?>
 		<h4>회원가입에 성공하였습니다</h4>

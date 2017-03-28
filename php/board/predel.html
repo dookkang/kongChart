@@ -1,4 +1,21 @@
-<?php $id = $_GET[id];?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php 
+	$id = $_GET[id];
+	$cltId = $_GET[cltId];
+	
+	$query = "SELECT * FROM membership WHERE id='".$cltId."'" ;
+	$result = mysql_query($query, $conn);
+	$row = mysql_fetch_array($result);
+	
+print $query;
+print $row[ctrl];
+
+
+
+
+
+?>
+
 <html>
 <head>
 <title>삭제</title>
@@ -6,7 +23,7 @@
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
 <br>
-<form name="fm" method="post" action="/php/board/del.html?id=<?php print $id;?>" >
+<form name="fm" method="post" action="/php/board/del.html?id=<?php print $id;?>&ctrl=<?php print $row[ctrl];?>" >
 	<table width=70% border=0 cellpadding=2 cellspacing=1 bgcolor=#777777>
 	<tr>
 		<td height=20 align=center bgcolor=#999999>
@@ -17,6 +34,7 @@
 		<td align=center>
 			<font color=white><B>비밀번호 :</B></font>
 			<INPUT type=password name=pass size=8>
+			<INPUT type=hidden name=pass size=8 value="<?php print $row[ctrl];?>">
 			<INPUT type=submit value="확 인">
 			<INPUT type=button value="취 소" onclick="history.back(-1)">
 		</td>
