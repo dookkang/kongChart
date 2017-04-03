@@ -2,15 +2,9 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php 
-	$cnt = 0;
-	$cntquery = "SELECT count(*) as 'cnt' FROM `T_BD_CUS` WHERE 1";
-	$cntresult = mysql_query($cntquery, $conn);
-	while($cntrow = mysql_fetch_array($cntresult))
-	{
-		$cnt = $cntrow[cnt];
-	}
+
 //글쓰기쿼리
-	$par = $cnt+1;
+	$par = $_POST[par];
 	$id = uniqid('T_BD_CUS_');
 	$name = $_POST[name];
 	$email = $_POST[email];
@@ -18,11 +12,13 @@
 	$title = strip_tags ( $_POST[title] );
 	$content = $_POST[content];
 if($title==''){
-	$title = 제목없음;
+	$title ='&nbsp;┕  '.제목없음;
+}else{
+	$title ='&nbsp;┕  ' .$title;
 };
 	$query = "INSERT INTO T_BD_CUS
 	(id, name, email, pass, title, content, wdate, ip, view, par, pardel)
-	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$par', '1')";
+	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$par', '0')";
 //파일저장
 ?>
 <?php

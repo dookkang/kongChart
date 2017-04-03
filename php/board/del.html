@@ -12,7 +12,9 @@
 		$pass = $_REQUEST[pass];
 		
 		//print "id--->".$id;
-		
+	$ppquery = "SELECT * FROM T_BD_CUS WHERE id='".$id."'";	
+	$ppresult = mysql_query($ppquery, $conn);
+	$pprow = mysql_fetch_array($ppresult);
 	$query = "SELECT pass FROM T_BD_CUS WHERE id='".$id."'";
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
@@ -22,8 +24,15 @@
 		$queryp = "DELETE FROM T_BD_CUS WHERE id='".$id."'";
 		$queryPF = "DELETE FROM T_FILE_CUS WHERE id='".$id."'";
 		
-		
+		//print $pprow[pardel];
+		//print $pprow[par];
 	if ($ctrl==1){
+		if ($pprow[pardel] == 1){
+		
+		$parquery = "DELETE FROM T_BD_CUS WHERE par='".$pprow[par]."'";
+		$parresul = mysql_query($parquery, $conn);
+		
+		};
 			$queryFD = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	
 			$resultFD = mysql_query($queryFD, $conn);
 			$rowFD = mysql_fetch_array($resultFD);
@@ -44,13 +53,17 @@
 			$resultp = mysql_query($queryp, $conn);
 			$resultPF = mysql_query($queryPF, $conn);
 				?>
-			<!-- <a href="/php/board/list.html"> 리스트 </a> -->
+			 <!-- <a href="/php/board/list.html"> 리스트 </a> -->
 			<script>
 			location.href = "/php/board/list.html";
 			</script>
 			<?php
 	}else{
+		if ($pprow[pardel] == 1){
+		$parquery = "DELETE FROM T_BD_CUS WHERE par='".$pprow[par]."'";
+		$parresul = mysql_query($parquery, $conn);
 
+		};
 		if ($pass==$row[pass]){
 
 			$queryFD = "SELECT * FROM T_FILE_CUS WHERE id='".$id."'";	

@@ -43,4 +43,4 @@ label {font-weight:bold;width:25px;margin-right:5px;display:inline-block}
 .adm_login_box input.off {background:#fff none}
 .copyright {width:478px;padding:15px 0 26px 0;margin:0 auto;background:#fbfbfb url('adm_login_bg.png') repeat-x 0 bottom;border-left:1px solid #dedede;border-right:1px solid #dedede;font-size:11px;line-height:11px;letter-spacing:0}
 button {width:500px;border:0}
-td, a {font-family:'Malgun Gothic', Dotum,sans-serif;font-size:12px;}
+td, a {font-family:'Malgun Gothic', Dotum,sans-serif;font-size:12px;white-space: nowrap;overflow: hidden;}

@@ -194,4 +194,47 @@
 			alert(e);
 		}
 	};
-	
+	function search(){
+		try{
+			//아이디필수체크
+			if(fm.search_word.value == ''){
+				alert("검색어를 입력하십시요");
+				fm.search_word.focus();
+				return;
+			}
+			document.fm.action = "/php/board/list.html";
+			document.fm.target = '_self';
+			document.fm.method = 'post';
+			document.fm.submit();			
+		}catch(e){
+			alert(e);
+		}
+	};
+	function rewri(){
+		try{
+			//아이디필수체크
+			if(fm.pass.value == ''){
+				alert("비밀번호를 입력하십시요");
+				fm.pass.focus();
+				return;
+			}
+			if(fm.title.value == ''){
+				alert("제목을 입력하십시요");
+				fm.title.focus();
+				return;
+			}
+			var a = CKEDITOR.instances.WText.getData();
+			fm.content.value = a;
+			if(fm.content.value == ''){
+				alert("내용을 입력하십시요");
+				fm.content.focus();
+				return;	
+			}
+			document.fm.action = "/php/board/reinsert.html";
+			document.fm.target = '_self';
+			document.fm.method = 'post';
+			document.fm.submit();			
+		}catch(e){
+			alert(e);
+		}
+	};

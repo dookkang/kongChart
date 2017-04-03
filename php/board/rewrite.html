@@ -1,4 +1,5 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<?php $par = $_GET[par]; ?>
 <html>
 <head>
 <title>게시판</title>
@@ -48,6 +49,7 @@
 			<td width=80 align=center bgcolor="#FFFFFF">파일
 			<td align=left>
 				<input type="file" name="myfile" size="60">
+				<INPUT type=hidden name=par size=8 value="<?php print $par;?>">
 			</td>
 		</tr>
 		<tr>
@@ -58,7 +60,7 @@
 		</tr>
 		<tr>
 			<td colspan=10 align=center>
-				<Input type='button' onclick="wri()" value="글저장">
+				<Input type='button' onclick="rewri()" value="글저장">
 				<Input type=reset value="다시쓰기">
 				<Input type='button' value="뒤로가기" onclick="history.back(-1)">
 			</td>

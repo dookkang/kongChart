@@ -22,7 +22,7 @@
 		<td width=10% align=center style='color:white'>
 			글쓴이
 		</td>
-		<td width=20% align=center style='color:white'>
+		<td width=10% align=center style='color:white'>
 			날짜
 		</td>
 		<td width=10% align=center style='color:white'>
@@ -66,9 +66,15 @@
 	$b_end_page = $b_start_page + $b_pageNum_list - 1; 
 
 	$from = ($pageNum-1)*$list;
-	$query = "select * from T_BD_CUS order by wdate desc limit $from,$list ";
+	$SW = $_GET[search_word]; 
+	
+	$SW = $_REQUEST[search_word];
+	if(is_null($SW)){
+		$query = "select * from T_BD_CUS order by par desc, wdate asc limit $from,$list ";
+	}else{
+		$query = "select * from T_BD_CUS where $_GET[field] like '%$SW%' order by id desc";
+	}
 	$result = mysql_query($query, $conn);
-
 	$Acount = 0;
 	$Acountquery = "SELECT count(*) as 'Acount' FROM `T_BD_CUS` WHERE 1";
 	$Acountresult = mysql_query($Acountquery, $conn);
@@ -84,16 +90,15 @@
 
 	$b_end_page = $total_page;
 	};
-
 	$n = 0;
 	$nnn = $cnt-(($pageNum-1)*$list);
 	while($row = mysql_fetch_array($result))
 	{
-	
+	$nnoo = $nnn--;
 ?>
 	<tr>
 		<td height=20 bgcolor=white name="id" align='center'>
-		<?php print $nnn--;?>
+		<?php print $nnoo;?>
 		</td>
 		<td height=20 bgcolor=white align=left>
 		<a href="/php/board/read.html?id=<?php print $row[id];?>&cltId=<?php print $cltId;?>"><?php print $row[title];?></a>
@@ -126,9 +131,28 @@
 ?>
 <br>
 <?php
+
+
+if($pageNum <= 1){ //페이지번호가 1보다 작거나 같다면?>
+
+		<font size=3 color=black>처음</font> <?//링크없이 그냥 처음이라는 문자만 출력합니다.
+
+	}else{ //1보다 크다면?>
+
+		<font size=2 ><a href="/php/board/list.html?pageNum=1&list=<?=$list?>">처음</a></font>
+
+<?//링크 걸린 처음을 출력합니다. 
+
+		};
+
+
+
+
+
+
 if($block <=1){  //block이 1보다 작거나 같으면 ?>
 
-	<font> </font> <?//더 이상 거꾸로 갈 수 없으므로 아무 표시도 하지 않습니다.
+	<font size=2 color=black></font> <?//더 이상 거꾸로 갈 수 없으므로 아무 표시도 하지 않습니다.
 
 }else{ //block이 1보다 크다면?>
 
@@ -138,7 +162,7 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 
 	}
 
-
+print '&nbsp;';
 
 
 
@@ -164,9 +188,10 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 
 ?>
 	<!-- <a href="/php/board/list.html?pageNum=<?php print $cc;?>"><?php print '&nbsp;'.$cc.'&nbsp;';?></a> -->
+
 <?php	
 	};
-
+print '&nbsp;';
 
 
 
@@ -174,7 +199,7 @@ $total_block = ceil($total_page/$b_pageNum_list);
 
 if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
 
-	<font> </font>  <?// 맨 마지막 블럭이므로 다음링크버튼이 필요없어서 보여주지 않는다.
+	<font size=2 color=black></font>  <?// 맨 마지막 블럭이므로 다음링크버튼이 필요없어서 보여주지 않는다.
 
 }else{ //그게 아니라면?>
 
@@ -184,15 +209,36 @@ if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
 
 }
 
+if($pageNum >= $total_page){ //페이지 넘버와 총 페이지가 같다면?>
+
+      <font size=3 color=black>마지막</font> 
+
+<?//마지막 페이지이므로 링크없이 마지막만 빨간색으로 출력
+
+}else{ // 그게 아니라면?>
+
+	<font size=2><a href="/php/board/list.html?pageNum=<?=$total_page?>&list=<?=$list?>">마지막</a></font>
+
+<?//페이지변수를 total_page로 주어서 마지막으로 가는 링크버튼을 출력
+
+}
+
 ?>
 
 
 	<br>
 	<br>
 	<a href="/php/board/write.html">글쓰기</a>
-
-
-
+	<br>
+	<form name=search method=get action="/php/board/list.html?search_word=search_word&field=field">
+	<select name=field>
+	<option value=title>제 목</option>   
+	<option value=content>내 용</option>   
+	<option value=name>글쓴이</option>   
+	</select>
+	<input type=text name=search_word size=20>
+	<Input type=submit value="검색">
+</form>
 </center>
 </body>
 </html>

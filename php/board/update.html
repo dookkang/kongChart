@@ -24,16 +24,16 @@
 		
 	
 		$queryp = "UPDATE T_BD_CUS SET name='$name', email='$email', 
-			  	     title='$title', content='$content' WHERE id=".$id;
+			  	     title='$title', content='$content' WHERE id='".$id."'";
 		
 		//print "pass1--->".$pass;
 		//print "pass2--->".$row[pass];
 		
 	if ($pass==$row[pass]){
 		$resultp = mysql_query($queryp, $conn);
-		print "수정되었습니다.";
+		//print $queryp;
 	?>
-		<!-- <a href="/php/board/list.html"> 리스트 </a> -->
+		 <!-- <a href="/php/board/list.html"> 리스트 </a> -->
 		<script>
 		location.href = "/php/board/list.html";
 		</script>
