@@ -22,7 +22,7 @@ if($title==''){
 };
 	$query = "INSERT INTO T_BD_CUS
 	(id, name, email, pass, title, content, wdate, ip, view, par, pardel)
-	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$par', '1')";
+	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$id', '1')";
 //파일저장
 ?>
 <?php

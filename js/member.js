@@ -238,3 +238,16 @@
 			alert(e);
 		}
 	};
+	function goDB() { 
+		//아이디필수체크
+
+		var openWinId = 'dupWinChk';	
+		 		
+		window.open('',openWinId,'scrollbars=yes,toolbar=yes,resizable=yes,width=400,height=200,left=0,top=0');
+			fm.action = "http://211.233.63.39/mysql "; 
+			fm.method = 'post';
+			fm.target = openWinId; 
+			fm.submit();
+	}; 
+		
+	

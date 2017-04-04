@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
+	<script type="text/javascript" src="/js/member.js"></script>
 	<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
  	<title>MainPage</title>
 </head>			
 	<frameset rows="44px,*">
-		<frame src="/php/layout/top.html">	
+		<frame src="/php/layout/top.html?id=<?php $cltId?>">	
 		<frame name='leftholl' src="/kongChart/kongChart17.html" name="left" scrolling="yes" marginwidth="10" marginheight="14" noresize>
 	</frameset>
 </html>

@@ -45,25 +45,26 @@
 	<tr>
 		<td colspan=4 bgcolor=white style='color:black'>
 		<?php print $row[content];?>
-		<table width=100%>
+		</td>
+	</tr>
+</table>
+		<table width=80% bgcolor=white>
 			<tr>
-				<td widht=200 align=left height=20>
-					<a href="/php/board/list.html" ><font color=black>
+				<td widht=100% align=right height=20 >
+					<a href="/php/board/list.html" ><font color=black align=right>
 					[목록보기]</font></a>
-					<a href="/php/board/write.html" ><font color=black>
+					<a href="/php/board/write.html" ><font color=black align=right>
 					[글쓰기]</font></a>
-					<a href="/php/board/edit.html?id=<?php print $id;?>" ><font color=black>
+					<a href="/php/board/edit.html?id=<?php print $id;?>" ><font color=black align=right> 
 					[수정]</font></a>
-					<a href="/php/board/predel.html?id=<?php print $id;?>&cltId=<?php print $cltId;?>" ><font color=black>
+					<a href="/php/board/predel.html?id=<?php print $id;?>&cltId=<?php print $cltId;?>" ><font color=black align=right>
 					[삭제]</font></a>
-					<a href="/php/board/rewrite.html?par=<?php print $row[par];?>" ><font color=black>
+					<a href="/php/board/rewrite.html?par=<?php print $row[par];?>" ><font color=black >
 					[답글쓰기]</font></a>
 				</td>
 			</tr>
 		</table>
-		</td>
-	</tr>
-</table>
+
 </center>
 </body>
 </html>

@@ -70,9 +70,29 @@
 	
 	$SW = $_REQUEST[search_word];
 	if(is_null($SW)){
-		$query = "select * from T_BD_CUS order by par desc, wdate asc limit $from,$list ";
+		$query = "select *
+from
+(
+	select C.id,C.name,C.email,C.pass,C.title,C.content,C.ip,C.view,C.par,C.pardel,C.wdate,'a' AS wdate2
+	from T_BD_CUS C
+	where 1
+	and id = par
+	union all
+	select B.id,B.name,B.email,B.pass,B.title,B.content,B.ip,B.view,B.par,B.pardel,A.wdate,B.wdate AS wdate2
+	from
+	T_BD_CUS A
+	right join
+	(
+		select *
+		from T_BD_CUS
+		where 1
+		and id <> par
+	) B
+	on A.id = B.par
+) NEWTABLE
+order by wdate desc,wdate2 desc limit $from,$list ";
 	}else{
-		$query = "select * from T_BD_CUS where $_GET[field] like '%$SW%' order by id desc";
+		$query = "select * from T_BD_CUS where $_GET[field] like '%$SW%' order by par desc, wdate asc limit $from,$list";
 	}
 	$result = mysql_query($query, $conn);
 	$Acount = 0;
@@ -117,10 +137,14 @@
 	$n++;
 	$num--;
   }
-
+	
 	
 ?>
-			
+	<tr>
+		<td colspan=5 bgcolor=white align=right>
+			<a href="/php/board/write.html">글쓰기</a>
+		</td>
+	</tr>		
 </table>
 
 
@@ -135,11 +159,11 @@
 
 if($pageNum <= 1){ //페이지번호가 1보다 작거나 같다면?>
 
-		<font size=3 color=black>처음</font> <?//링크없이 그냥 처음이라는 문자만 출력합니다.
+		<font size=2 color=black>처음</font> <?//링크없이 그냥 처음이라는 문자만 출력합니다.
 
 	}else{ //1보다 크다면?>
 
-		<font size=2 ><a href="/php/board/list.html?pageNum=1&list=<?=$list?>">처음</a></font>
+		<font size=1 ><a href="/php/board/list.html?pageNum=1&list=<?=$list?>">처음</a></font>
 
 <?//링크 걸린 처음을 출력합니다. 
 
@@ -156,7 +180,7 @@ if($block <=1){  //block이 1보다 작거나 같으면 ?>
 
 }else{ //block이 1보다 크다면?>
 
-	<font size=2><a href="/php/board/list.html?pageNum=<?=$b_start_page-1?>&list=<?=$list?>&cc=<?=$b_start_page-10?>">이전</a></font>
+	<font size=1><a href="/php/board/list.html?pageNum=<?=$b_start_page-1?>&list=<?=$list?>&cc=<?=$b_start_page-10?>">이전</a></font>
 
 <?//이전 링크를 보여줍니다.
 
@@ -176,7 +200,7 @@ print '&nbsp;';
 
 	{?>
 
-		<font size=3 color=black><?=$cc?></font><?//링크걸지 않고 그냥 현재페이지만 출력
+		<font size=2 color=black><?=$cc?></font><?//링크걸지 않고 그냥 현재페이지만 출력
 
 	}else{ //서로 다르다면?>
 
@@ -203,7 +227,7 @@ if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
 
 }else{ //그게 아니라면?>
 
-        <font size=2><a href="/php/board/list.html?pageNum=<?=$b_end_page+1?>&list=<?=$list?>&cc=<?=$cc?>">다음</a></font>
+        <font size=1><a href="/php/board/list.html?pageNum=<?=$b_end_page+1?>&list=<?=$list?>&cc=<?=$cc?>">다음</a></font>
 
 <?//다음 링크버튼을 걸어 보여준다.
 
@@ -211,13 +235,13 @@ if($block >= $total_block){  //block 과 총 block 갯수와 값이 같다면?>
 
 if($pageNum >= $total_page){ //페이지 넘버와 총 페이지가 같다면?>
 
-      <font size=3 color=black>마지막</font> 
+      <font size=2 color=black>마지막</font> 
 
 <?//마지막 페이지이므로 링크없이 마지막만 빨간색으로 출력
 
 }else{ // 그게 아니라면?>
 
-	<font size=2><a href="/php/board/list.html?pageNum=<?=$total_page?>&list=<?=$list?>">마지막</a></font>
+	<font size=1><a href="/php/board/list.html?pageNum=<?=$total_page?>&list=<?=$list?>">마지막</a></font>
 
 <?//페이지변수를 total_page로 주어서 마지막으로 가는 링크버튼을 출력
 
@@ -228,8 +252,6 @@ if($pageNum >= $total_page){ //페이지 넘버와 총 페이지가 같다면?>
 
 	<br>
 	<br>
-	<a href="/php/board/write.html">글쓰기</a>
-	<br>
 	<form name=search method=get action="/php/board/list.html?search_word=search_word&field=field">
 	<select name=field>
 	<option value=title>제 목</option>   
@@ -238,6 +260,7 @@ if($pageNum >= $total_page){ //페이지 넘버와 총 페이지가 같다면?>
 	</select>
 	<input type=text name=search_word size=20>
 	<Input type=submit value="검색">
+
 </form>
 </center>
 </body>

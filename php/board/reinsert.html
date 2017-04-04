@@ -2,7 +2,6 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php 
-
 //글쓰기쿼리
 	$par = $_POST[par];
 	$id = uniqid('T_BD_CUS_');
@@ -67,9 +66,9 @@ if($title==''){
 			$r = mysql_query($fquery, $conn);
 
 ?>
-			//<a href="/php/board/list.html"> 리스트 </a>
+			<a href="/php/board/list.html"> 리스트 </a>
 			<script>
-			location.href = "/php/board/list.html";
+			//location.href = "/php/board/list.html";
 			</script>
 <?php 
 		}else{

@@ -1,4 +1,11 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
+<?php
+	$query = "SELECT * FROM membership WHERE id='".$cltId."'";
+	$result = mysql_query($query, $conn);
+	$row = mysql_fetch_array($result);
+	$ctrl = $row[ctrl];
+?>
 <!doctype html>
 <HTML style="height:100%;">
 <HEAD>
@@ -33,7 +40,16 @@
 				<td style='width:80px; text-align:center'> special </td>
 				<td style='width:80px; text-align:center'>
 					<a href='/php/board/list.html' target='leftholl'> 자 유 게 시 판 </a> 
-				</td>		
+				</td>
+				<form name="fm">
+				<td style='width:80px; text-align:center'>
+					<?php
+					if ($ctrl==1){?>
+					<a  target="_blank" href=http://211.233.63.39/mysql >데 이 터 베 이 스</a>
+					<?};
+					?>
+				</td>	
+				</form>	
 			</tr>
 		</table>
 </div>
