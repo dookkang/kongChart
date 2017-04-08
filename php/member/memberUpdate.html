@@ -46,7 +46,15 @@
  </table>
  <CENTER>
 <button type="button" class="btn_2xl nv mt30" onclick="changeInfo()">완료</button><br>
-<button type="button" class="btn_2xl nv mt30" onclick="fndel()">탈퇴하기</button>
+	<form name="fm" method="post" action="/php/member/memberDel.html">
+	<table>
+	<tr>
+		<td>
+			<INPUT type="button" onclick="fndel()" value="탈 퇴">
+		</td>
+	</tr>
+	</table>
+	</form>
   </CENTER>
 </form>
 </body>

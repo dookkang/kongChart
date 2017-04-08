@@ -2,7 +2,7 @@
 
 	session_start();
 	if(!isset($_SESSION['cltId']) ){
-		header('Location: /php/member/login.html');  
+		header('location: /php/member/login.html');  
 	}
 	
 ?>

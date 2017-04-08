@@ -1,10 +1,24 @@
-<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/dbConnect.php"; ?>
 <?php
+	session_start();
+	if(!isset($_SESSION['cltId']) ){;  
+	}
+	$tqtq = 1;
+if ($cltId == ''){
+	$tqtq = 1;
+	$target = '_top';
+	if($tqtq = 1){ $t = index.html; };
+}else{
+	$tqtq = 0;
 	$query = "SELECT * FROM membership WHERE id='".$cltId."'";
 	$result = mysql_query($query, $conn);
 	$row = mysql_fetch_array($result);
 	$ctrl = $row[ctrl];
+	$target = 'leftholl';
+	if($tqtq = 0){ $t = leftholl; };
+};
+
 ?>
 <!doctype html>
 <HTML style="height:100%;">
@@ -15,16 +29,23 @@
 
 <body style="height:100%;overflow:hidden;margin:0" bgcolor="8fdef2">
 <div style='width:100%;height:100%;text-align:right;'>
-	
-	<img src= "/img/logo.jpg" width="62px" height="44px" align="left">
+	<img src= "/img/kongLogo.png" width="117px" height="44px" align="left">
+	<?php if ($cltId == ''){?>
 	<a 
-	href="javascript:void();" 
-	onclick="fnmypage()" 
-	style= "font-family:굴림; font-size: 12px; margin-right:10px" > myPage</a>
+	href="/php/member/login.html" 
+	style= "font-family:굴림; font-size: 12px; margin-right:10px" 
+	target='_top'> login</a>
+	<?};?>
+	<?php if (!$cltId == ''){?>
+	<a 
+	href="/php/member/memberUpdate.html" 
+	style= "font-family:굴림; font-size: 12px; margin-right:10px" 
+	target='leftholl'> myPage</a>
 	<a 
 	href="javascript:void();" 
 	onclick="fnLogout()" 
 	style= "font-family:굴림; font-size: 12px; margin-right:10px" > logout </a>
+	<?};?>
 	<br>
 	<table align="left" style= "font-family:Dotum; font-size: 12px; font-weight: bold;">
 			<tr>
@@ -38,14 +59,15 @@
 					<a href='/php/layout/chart.html' target='leftholl'> premium </a> 
 				</td>							
 				<td style='width:80px; text-align:center'> special </td>
+				
 				<td style='width:80px; text-align:center'>
-					<a href='/php/board/list.html' target='leftholl'> 자 유 게 시 판 </a> 
+					<a href='/php/board/list.html' target='<?php print $target; ?>'> Q & A </a> 
 				</td>
 				<form name="fm">
 				<td style='width:80px; text-align:center'>
 					<?php
 					if ($ctrl==1){?>
-					<a  target="_blank" href=http://211.233.63.39/mysql >데 이 터 베 이 스</a>
+					<nobr><a  target="_blank" href=http://211.233.63.39/mysql >데 이 터 베 이 스</a></nobr>
 					<?};
 					?>
 				</td>	

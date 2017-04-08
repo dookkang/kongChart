@@ -1,4 +1,8 @@
-<?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
+<?php
+	session_start();
+	if(!isset($_SESSION['cltId']) ){
+	}
+?>
 <? $cltId = $_REQUEST["cltId"];?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
@@ -8,7 +12,7 @@
  	<title>MainPage</title>
 </head>			
 	<frameset rows="44px,*">
-		<frame src="/php/layout/top.html?id=<?php $cltId?>">	
+		<frame name="topp" src="/php/layout/top.html?id=<?php $cltId?>">	
 		<frame name='leftholl' src="/kongChart/kongChart17.html" name="left" scrolling="yes" marginwidth="10" marginheight="14" noresize>
 	</frameset>
 </html>

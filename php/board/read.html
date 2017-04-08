@@ -59,8 +59,10 @@
 					[수정]</font></a>
 					<a href="/php/board/predel.html?id=<?php print $id;?>&cltId=<?php print $cltId;?>" ><font color=black align=right>
 					[삭제]</font></a>
+					<?php if($row[pardel] == 1){?>
 					<a href="/php/board/rewrite.html?par=<?php print $row[par];?>" ><font color=black >
 					[답글쓰기]</font></a>
+					<?};?>
 				</td>
 			</tr>
 		</table>

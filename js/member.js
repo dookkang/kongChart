@@ -250,4 +250,8 @@
 			fm.submit();
 	}; 
 		
-	
+	function goboard(){
+		if(confirm('이동하시겠습니까?')){
+			leftholl.location.href = "/php/board/list.html";					
+		}
+	};

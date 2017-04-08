@@ -2,6 +2,14 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/meta.php"; ?>
 <?php require $_SERVER["DOCUMENT_ROOT"]."/php/etc/inc.php"; ?>
 <?php 
+	$max = 0;
+	$maxquery = "SELECT max(par) as 'ff' FROM `T_BD_CUS` WHERE 1";
+	$maxresult = mysql_query($maxquery, $conn);
+	while($maxrow = mysql_fetch_array($maxresult))
+	{
+		$max = $maxrow[ff];
+	}
+	$pars = $max + 1;
 	$cnt = 0;
 	$cntquery = "SELECT count(*) as 'cnt' FROM `T_BD_CUS` WHERE 1";
 	$cntresult = mysql_query($cntquery, $conn);
@@ -22,7 +30,7 @@ if($title==''){
 };
 	$query = "INSERT INTO T_BD_CUS
 	(id, name, email, pass, title, content, wdate, ip, view, par, pardel)
-	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$id', '1')";
+	VALUES('$id', '$name', '$email', '$pass', '$title', '$content', now(), '0', '0', '$pars', '1')";
 //파일저장
 ?>
 <?php
